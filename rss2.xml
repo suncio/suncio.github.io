@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Suncio&#39;s Blog</title>
+    <link>suncio.github.io/</link>
+    <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
+    
+    <description></description>
+    <pubDate>Thu, 26 Oct 2017 13:44:18 GMT</pubDate>
+    <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Notes and Harmony</title>
+      <link>suncio.github.io/2017/10/26/Notes-and-Harmony/</link>
+      <guid>suncio.github.io/2017/10/26/Notes-and-Harmony/</guid>
+      <pubDate>Thu, 26 Oct 2017 13:27:25 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;This passage is about basic knowlwdge of how to choose notes in scale due to harmony when improvising.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;chord
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>This passage is about basic knowlwdge of how to choose notes in scale due to harmony when improvising.</p><table><thead><tr><th>chord</th><th>mode</th><th>scale</th><th>avoided note</th></tr></thead><tbody><tr><td>大七</td><td>Ionian</td><td>1、2、3、4、5、6、7、1</td><td>4</td></tr><tr><td></td><td>Lydian</td><td>1、2、3、#4、5、6、7、1</td><td>无</td></tr><tr><td>小七</td><td>Dorian</td><td>1、2、b3、4、5、6、b7、1</td><td>6</td></tr><tr><td></td><td>旋律小调</td><td>1、2、b3、4、5、6、7、1</td><td>无</td></tr><tr><td></td><td>Aeolian</td><td>1、2、b3、4、5、b6、b7、1</td><td>b6</td></tr><tr><td>属七</td><td>Mixolydian</td><td>1、2、3、4、5、6、b7、1</td><td>4</td></tr><tr><td></td><td>半全减音阶</td><td>1、b2、#2、3、#4、5、6、b7、1</td><td>无</td></tr><tr><td></td><td>Altered(变属)</td><td>1、b2、#2、3、b5、b6、b7、1</td><td>无</td></tr><tr><td></td><td>小调Blues</td><td>1、b3、4、#4、5、b7、1</td><td>无</td></tr><tr><td></td><td>大调Blues</td><td>1、2、#2、3、5、6、1</td><td>无</td></tr><tr><td>增七</td><td>全音阶</td><td>1、2、3、b5、b6、b7、1</td><td>无</td></tr><tr><td>减七</td><td>减音阶</td><td>1、2、b3、4、b5、b6、6、7、1</td><td>无</td></tr><tr><td>半减七</td><td>Locrian</td><td>1、b2、b3、4、b5、b6、b7、1</td><td>b2</td></tr><tr><td></td><td>Locrian2</td><td>1、2、b3、4、b5、b6、b7、1</td><td>无</td></tr><tr><td>小大七</td><td>旋律小调</td><td>1、2、b3、4、5、6、7、1</td><td>无</td></tr><tr><td>属7sus4</td><td>Mixolydian</td><td>1、2、3、4、5、6、b7、1</td><td>3</td></tr><tr><td>增大七</td><td>Lydian#5</td><td>1、2、3、#4、#5、6、7、1</td><td>无</td></tr><tr><td>大六</td><td>Ionian</td><td>1、2、3、4、5、6、7、1</td><td>4</td></tr><tr><td></td><td>大调五声</td><td>1、2、3、5、6、1</td><td>无</td></tr><tr><td>小六</td><td>旋律小调</td><td>1、2、b3、4、5、6、7、1</td><td>无</td></tr><tr><td></td><td>小调五声</td><td>1、b3、4、5、6、1</td><td>无</td></tr></tbody></table>]]></content:encoded>
+      
+      <comments>suncio.github.io/2017/10/26/Notes-and-Harmony/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>II-V-I chord processing</title>
+      <link>suncio.github.io/2017/10/26/II-V-I-chord-processing/</link>
+      <guid>suncio.github.io/2017/10/26/II-V-I-chord-processing/</guid>
+      <pubDate>Thu, 26 Oct 2017 13:18:24 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;This passage is mainly about commonly used II-V-I chord processions in music.&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;II-IV-I&lt;br&gt;II-IV-I may be the most com
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>This passage is mainly about commonly used II-V-I chord processions in music.<br><br></p><ol><li>II-IV-I<br>II-IV-I may be the most common chord procession played in jazz. In key C, it’s D-7, G7, Cmaj7.</li></ol><ul><li>Minor 7th chords are II chords.</li><li>Dominant 7th chords are V chords.</li><li>Major 7th chords are I chords.</li></ul><ol><li><p>voice leading<br><a href="https://en.m.wikipedia.org/wiki/Voice_leading" target="_blank" rel="external">wikipedia</a>: “Voice leading is the term used to describe the linear progression of melodic lines and their interaction with one another to create harmonies, according to the principles of common-practice harmony and counterpoint”<br>In II-IV-I processions, notice that as you go from the II chord to the V chord to the I chord, the 7th of each chord resolves down a half step and becomes the 3rd of the next chord. This is basic voice leading. Voice leading is the direction a particular note wants to go. It’s almost as if there is a gravitational or magnetic pull on the 7th, urging it to resolve down a half-step.</p></li><li><p>Use II-V-I to change key a step down<br>For example, Dm-G-C-Cm-F-Bb could change key from C to Bb. Simply changing 3rd note of chord C a half-step down makes it Cm, in other word, I(C) becomes II(Bb). Then key in C becomes key in Bb.</p></li></ol>]]></content:encoded>
+      
+      <comments>suncio.github.io/2017/10/26/II-V-I-chord-processing/#disqus_thread</comments>
+    </item>
+    
+  </channel>
+</rss>
