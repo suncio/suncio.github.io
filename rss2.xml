@@ -8,8 +8,27 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Tue, 31 Oct 2017 14:12:24 GMT</pubDate>
+    <pubDate>Thu, 16 Nov 2017 18:47:39 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>SCC17 experience on spot</title>
+      <link>suncio.github.io/2017/11/16/SCC17-experience/</link>
+      <guid>suncio.github.io/2017/11/16/SCC17-experience/</guid>
+      <pubDate>Thu, 16 Nov 2017 17:56:03 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;“我真傻，真的，”赛场的我抬起我没有神采的眼睛来，接着说。“我单知道去年的时候CPU会被超微忘记运，让我们搭不起系统来；我不知道风扇也会。我们早早地就接着题目，拿出笔记本，开始优化代码和编译运行。应用是很听话的，我们编译运行优化测试都没有问题；我们出发了。等到了现场，我就在
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>“我真傻，真的，”赛场的我抬起我没有神采的眼睛来，接着说。“我单知道去年的时候CPU会被超微忘记运，让我们搭不起系统来；我不知道风扇也会。我们早早地就接着题目，拿出笔记本，开始优化代码和编译运行。应用是很听话的，我们编译运行优化测试都没有问题；我们出发了。等到了现场，我就在摆弄着这可人的机器，Intel Xeon Platinum 8176 Scalable <em> 6，Nvidia Tesla V100 </em> 12，插上了卡，要装好机器， 装上系统。我测应用，一切都好好的罢，便测测Linpack看，47，我便心欢欢的去睡了。到了比赛开始前，要测HPCG和HPL了，我运行一看，只见GPU温度蹭蹭的往上彪，眼看着47的数值掉到了24，没有见我们的风扇了。风扇是不运到别家去的；到超微去一问，竟然没有运。我们急了，央人带过来。直到比赛开始第二天，催来催去超微才送来我们的八个风扇，可这时组委会却不让改硬件了。大家都说，糟了，怕是比赛凉了。再测测；GPU果然掉了近半的性能，原本的主频已经降得不成样子，上面还跑着本应拿满分的Born呢。……”我接着但是呜咽，说不出成句的话来。</p><p>倘一看见别人提交了Mr.Bayes，隔壁应用就说：“诶诶，你看看我们的Mr.Bayes，若是像他们一样，丢在云上跑着不动，便不会数据污染，现在大约也已经跑到满分了罢……”</p>]]></content:encoded>
+      
+      <comments>suncio.github.io/2017/11/16/SCC17-experience/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>人活着就是为了四川辣酱</title>
