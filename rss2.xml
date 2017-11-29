@@ -8,14 +8,52 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Thu, 16 Nov 2017 18:47:39 GMT</pubDate>
+    <pubDate>Wed, 29 Nov 2017 02:49:03 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>WSL + XShell</title>
+      <link>suncio.github.io/2017/11/29/WSL-XShell/</link>
+      <guid>suncio.github.io/2017/11/29/WSL-XShell/</guid>
+      <pubDate>Wed, 29 Nov 2017 02:15:19 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;因为虚拟机炸了&lt;i&gt;（血的教训，告诉我们不要相信50G空间够你日摆一个操作系统）&lt;/i&gt;，加上CentOS的yum源的更新程度感天动地，就把工作环境迁移到WSL了。WSL使用体验整体良好，尽管有一些尚可接受的延迟。但是！配色瞎眼睛！这个配色开发者你们眼睛不会瞎吗？！&lt;br&gt;
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>因为虚拟机炸了<i>（血的教训，告诉我们不要相信50G空间够你日摆一个操作系统）</i>，加上CentOS的yum源的更新程度感天动地，就把工作环境迁移到WSL了。WSL使用体验整体良好，尽管有一些尚可接受的延迟。但是！配色瞎眼睛！这个配色开发者你们眼睛不会瞎吗？！<br>遂决定更改配色方案，由于之前连远程机器时习惯XShell的配色。就干脆开一个sshd，用本地回路在XShell上工作了，主要参考“<a href="https://memeda.github.io/%E6%8A%80%E6%9C%AF/2016/08/03/WslBashOnWindowsConfig.html" target="_blank" rel="external">Windows Subsystem for Linux(WSL)的配置</a>”这篇文章。<br>最后得到的结果似乎比直接开bash.exe还要快，而且配色也改善了很多。</p>]]></content:encoded>
+      
+      <comments>suncio.github.io/2017/11/29/WSL-XShell/#disqus_thread</comments>
+    </item>
+    
+    <item>
+      <title>Ruskell &amp; Algorithms (1) -- Matrix Chain Order</title>
+      <link>suncio.github.io/2017/11/29/Ruskell-Algorithms-1-Matrix-Chain-Order/</link>
+      <guid>suncio.github.io/2017/11/29/Ruskell-Algorithms-1-Matrix-Chain-Order/</guid>
+      <pubDate>Wed, 29 Nov 2017 02:10:12 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;这是一个利用Rust&amp;amp;Haskell实现算法导论上的经典算法或其他有趣算法的系列（大概不会坑吧），所有代码可以点击此&lt;a href=&quot;https://play.rust-lang.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;在线运行&lt;/
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>这是一个利用Rust&amp;Haskell实现算法导论上的经典算法或其他有趣算法的系列（大概不会坑吧），所有代码可以点击此<a href="https://play.rust-lang.org/" target="_blank" rel="external">在线运行</a>得到结果。<br>第一篇是实现的利用动态规划解决矩阵链乘法问题的问题，下面是相应的Rust代码：</p><figure class="highlight rust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">extern</span> <span class="keyword">crate</span> time;</div><div class="line"><span class="keyword">extern</span> <span class="keyword">crate</span> rand;</div><div class="line"></div><div class="line"><span class="keyword">use</span> time::*;</div><div class="line"><span class="keyword">use</span> std::vec;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">fn</span> <span class="title">print_optimal_parens</span></span>(<span class="comment">/*file:&amp;mut File, */</span>s:&amp;<span class="built_in">Vec</span>&lt;<span class="built_in">Vec</span>&lt;<span class="built_in">u32</span>&gt;&gt;, i:<span class="built_in">u32</span>, j:<span class="built_in">u32</span> ) </div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> i == j</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">print!</span>(<span class="string">"A&#123;&#125; "</span>, i);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="built_in">print!</span>(<span class="string">"( "</span>);</div><div class="line">        print_optimal_parens(s, i, s[i <span class="keyword">as</span> <span class="built_in">usize</span>][j <span class="keyword">as</span> <span class="built_in">usize</span>]);</div><div class="line">        print_optimal_parens(s, s[i <span class="keyword">as</span> <span class="built_in">usize</span>][j <span class="keyword">as</span> <span class="built_in">usize</span>]+<span class="number">1</span>, j);</div><div class="line">        <span class="built_in">print!</span>(<span class="string">") "</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">fn</span> <span class="title">matrix_chain_order</span></span>(p:&amp;<span class="built_in">Vec</span>&lt;<span class="built_in">u32</span>&gt;) -&gt; (<span class="built_in">Vec</span>&lt;<span class="built_in">Vec</span>&lt;<span class="built_in">u32</span>&gt;&gt;, <span class="built_in">Vec</span>&lt;<span class="built_in">Vec</span>&lt;<span class="built_in">u32</span>&gt;&gt;)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">let</span> n = p.len() - <span class="number">1</span>;</div><div class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> m:<span class="built_in">Vec</span>&lt;<span class="built_in">Vec</span>&lt;<span class="built_in">u32</span>&gt;&gt; = <span class="built_in">Vec</span>::with_capacity(n+<span class="number">1</span>);</div><div class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> s:<span class="built_in">Vec</span>&lt;<span class="built_in">Vec</span>&lt;<span class="built_in">u32</span>&gt;&gt; = <span class="built_in">Vec</span>::with_capacity(n+<span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..n+<span class="number">1</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">let</span> <span class="keyword">mut</span> temp:<span class="built_in">Vec</span>&lt;<span class="built_in">u32</span>&gt; = <span class="built_in">Vec</span>::with_capacity(n+<span class="number">1</span>);</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="number">0</span>..n+<span class="number">1</span></div><div class="line">        &#123;</div><div class="line">            temp.push(<span class="number">0</span>);</div><div class="line">        &#125;</div><div class="line">        m.push(temp);</div><div class="line">        <span class="keyword">let</span> <span class="keyword">mut</span> temp:<span class="built_in">Vec</span>&lt;<span class="built_in">u32</span>&gt; = <span class="built_in">Vec</span>::with_capacity(n+<span class="number">1</span>);</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="number">0</span>..n+<span class="number">1</span></div><div class="line">        &#123;</div><div class="line">            temp.push(<span class="number">0</span>);</div><div class="line">        &#125;</div><div class="line">        s.push(temp);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> l <span class="keyword">in</span> <span class="number">2</span>..n+<span class="number">1</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span>..n-l+<span class="number">2</span></div><div class="line">        &#123;</div><div class="line">            <span class="keyword">let</span> j:<span class="built_in">usize</span> = i+l-<span class="number">1</span>;</div><div class="line">            m[i][j] = std::<span class="built_in">u32</span>::MAX;</div><div class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> i..j</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">let</span> temp:<span class="built_in">u32</span> = p[i-<span class="number">1</span>]* p[k] * p[j];</div><div class="line">                <span class="keyword">let</span> q:<span class="built_in">u32</span> = m[i][k] + m[k+<span class="number">1</span>][j] + temp;</div><div class="line">                <span class="keyword">if</span> q &lt; m[i][j]</div><div class="line">                &#123;</div><div class="line">                    m[i][j] = q;</div><div class="line">                    s[i][j] = k <span class="keyword">as</span> <span class="built_in">u32</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    (s, m)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> vec = <span class="built_in">Vec</span>::new();</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..<span class="number">31</span> <span class="comment">//generate n+1 (n=30) numbers</span></div><div class="line">    &#123;</div><div class="line">        vec.push(rand::random::&lt;<span class="built_in">u32</span>&gt;() % <span class="number">100</span> + <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> start = time::now();</div><div class="line">    <span class="keyword">let</span> (s, m) = matrix_chain_order(&amp;vec);</div><div class="line">    </div><div class="line">    <span class="built_in">println!</span>(<span class="string">"s:"</span>);</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..s.len()</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="number">0</span>..s[i].len()</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">print!</span>(<span class="string">"&#123;&#125;  "</span>, s[i][j]);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">println!</span>(<span class="string">"  new line "</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">println!</span>(<span class="string">"m:"</span>);</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..m.len()</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="number">0</span>..m[i].len()</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">print!</span>(<span class="string">"&#123;&#125;  "</span>, m[i][j]);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">println!</span>(<span class="string">"  new line  "</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"><span class="keyword">let</span> end = time::now();</div><div class="line"><span class="keyword">let</span> dura = end - start; </div><div class="line"><span class="built_in">println!</span>(<span class="string">"&#123;:?&#125;"</span>, dura);  </div><div class="line">    print_optimal_parens(&amp;s, <span class="number">1</span>, s.len() <span class="keyword">as</span> <span class="built_in">u32</span> - <span class="number">1</span>);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Note:</p><ol><li>有一个小坑是关于time的，似乎是由于实现原因，不能用占位符{}打印time，需要用debug下的{:?}来打印时间。</li><li>Rust的变量生存周期跟c系列还是挺不一样的，写的时候略微有些不习惯</li></ol>]]></content:encoded>
+      
+      <comments>suncio.github.io/2017/11/29/Ruskell-Algorithms-1-Matrix-Chain-Order/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>SCC17 experience on spot</title>
       <link>suncio.github.io/2017/11/16/SCC17-experience/</link>
       <guid>suncio.github.io/2017/11/16/SCC17-experience/</guid>
-      <pubDate>Thu, 16 Nov 2017 17:56:03 GMT</pubDate>
+      <pubDate>Thu, 16 Nov 2017 02:56:03 GMT</pubDate>
       <description>
       
         
@@ -34,7 +72,7 @@
       <title>人活着就是为了四川辣酱</title>
       <link>suncio.github.io/2017/10/31/%E4%BA%BA%E6%B4%BB%E7%9D%80%E5%B0%B1%E6%98%AF%E4%B8%BA%E4%BA%86%E5%9B%9B%E5%B7%9D%E8%BE%A3%E9%85%B1/</link>
       <guid>suncio.github.io/2017/10/31/%E4%BA%BA%E6%B4%BB%E7%9D%80%E5%B0%B1%E6%98%AF%E4%B8%BA%E4%BA%86%E5%9B%9B%E5%B7%9D%E8%BE%A3%E9%85%B1/</guid>
-      <pubDate>Tue, 31 Oct 2017 22:19:10 GMT</pubDate>
+      <pubDate>Tue, 31 Oct 2017 08:19:10 GMT</pubDate>
       <description>
       
         
@@ -53,7 +91,7 @@
       <title>Notes and Harmony</title>
       <link>suncio.github.io/2017/10/26/Notes-and-Harmony/</link>
       <guid>suncio.github.io/2017/10/26/Notes-and-Harmony/</guid>
-      <pubDate>Fri, 27 Oct 2017 03:27:25 GMT</pubDate>
+      <pubDate>Thu, 26 Oct 2017 13:27:25 GMT</pubDate>
       <description>
       
         
@@ -76,7 +114,7 @@
       <title>II-V-I chord processing</title>
       <link>suncio.github.io/2017/10/26/II-V-I-chord-processing/</link>
       <guid>suncio.github.io/2017/10/26/II-V-I-chord-processing/</guid>
-      <pubDate>Fri, 27 Oct 2017 03:18:24 GMT</pubDate>
+      <pubDate>Thu, 26 Oct 2017 13:18:24 GMT</pubDate>
       <description>
       
         
