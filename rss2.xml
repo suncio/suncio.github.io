@@ -8,14 +8,34 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Thu, 24 May 2018 13:25:02 GMT</pubDate>
+    <pubDate>Fri, 02 Oct 2020 05:58:34 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Important Statement</title>
+      <link>suncio.github.io/2020/10/01/Important-Statement/</link>
+      <guid>suncio.github.io/2020/10/01/Important-Statement/</guid>
+      <pubDate>Fri, 02 Oct 2020 05:47:51 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;This blog is currently being reorganized. My recent projects and study notes will be posted to github/suncio repositories.&lt;/p&gt;
+
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>This blog is currently being reorganized. My recent projects and study notes will be posted to github/suncio repositories.</p>]]></content:encoded>
+      
+      <comments>suncio.github.io/2020/10/01/Important-Statement/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>《盖特露德》节选与遐思</title>
       <link>suncio.github.io/2018/05/24/%E3%80%8A%E7%9B%96%E7%89%B9%E9%9C%B2%E5%BE%B7%E3%80%8B%E8%8A%82%E9%80%89%E4%B8%8E%E9%81%90%E6%80%9D/</link>
       <guid>suncio.github.io/2018/05/24/%E3%80%8A%E7%9B%96%E7%89%B9%E9%9C%B2%E5%BE%B7%E3%80%8B%E8%8A%82%E9%80%89%E4%B8%8E%E9%81%90%E6%80%9D/</guid>
-      <pubDate>Thu, 24 May 2018 12:53:38 GMT</pubDate>
+      <pubDate>Fri, 25 May 2018 03:53:38 GMT</pubDate>
       <description>
       
         
@@ -35,7 +55,7 @@
       <title>Ruskell &amp; Algorithms (2) -- FFT</title>
       <link>suncio.github.io/2017/12/09/Ruskell-Algorithms-2-FFT/</link>
       <guid>suncio.github.io/2017/12/09/Ruskell-Algorithms-2-FFT/</guid>
-      <pubDate>Sat, 09 Dec 2017 15:27:43 GMT</pubDate>
+      <pubDate>Sun, 10 Dec 2017 07:27:43 GMT</pubDate>
       <description>
       
         
@@ -54,7 +74,7 @@
       <title>WSL + XShell</title>
       <link>suncio.github.io/2017/11/29/WSL-XShell/</link>
       <guid>suncio.github.io/2017/11/29/WSL-XShell/</guid>
-      <pubDate>Wed, 29 Nov 2017 02:15:19 GMT</pubDate>
+      <pubDate>Wed, 29 Nov 2017 18:15:19 GMT</pubDate>
       <description>
       
         
@@ -73,7 +93,7 @@
       <title>Ruskell &amp; Algorithms (1) -- Matrix Chain Order</title>
       <link>suncio.github.io/2017/11/29/Ruskell-Algorithms-1-Matrix-Chain-Order/</link>
       <guid>suncio.github.io/2017/11/29/Ruskell-Algorithms-1-Matrix-Chain-Order/</guid>
-      <pubDate>Wed, 29 Nov 2017 02:10:12 GMT</pubDate>
+      <pubDate>Wed, 29 Nov 2017 18:10:12 GMT</pubDate>
       <description>
       
         
@@ -92,7 +112,7 @@
       <title>SCC17 experience on spot</title>
       <link>suncio.github.io/2017/11/16/SCC17-experience/</link>
       <guid>suncio.github.io/2017/11/16/SCC17-experience/</guid>
-      <pubDate>Thu, 16 Nov 2017 02:56:03 GMT</pubDate>
+      <pubDate>Thu, 16 Nov 2017 18:56:03 GMT</pubDate>
       <description>
       
         
@@ -111,7 +131,7 @@
       <title>人活着就是为了四川辣酱</title>
       <link>suncio.github.io/2017/10/31/%E4%BA%BA%E6%B4%BB%E7%9D%80%E5%B0%B1%E6%98%AF%E4%B8%BA%E4%BA%86%E5%9B%9B%E5%B7%9D%E8%BE%A3%E9%85%B1/</link>
       <guid>suncio.github.io/2017/10/31/%E4%BA%BA%E6%B4%BB%E7%9D%80%E5%B0%B1%E6%98%AF%E4%B8%BA%E4%BA%86%E5%9B%9B%E5%B7%9D%E8%BE%A3%E9%85%B1/</guid>
-      <pubDate>Tue, 31 Oct 2017 08:19:10 GMT</pubDate>
+      <pubDate>Tue, 31 Oct 2017 23:19:10 GMT</pubDate>
       <description>
       
         
@@ -130,7 +150,7 @@
       <title>Notes and Harmony</title>
       <link>suncio.github.io/2017/10/26/Notes-and-Harmony/</link>
       <guid>suncio.github.io/2017/10/26/Notes-and-Harmony/</guid>
-      <pubDate>Thu, 26 Oct 2017 13:27:25 GMT</pubDate>
+      <pubDate>Fri, 27 Oct 2017 04:27:25 GMT</pubDate>
       <description>
       
         
@@ -153,7 +173,7 @@
       <title>II-V-I chord processing</title>
       <link>suncio.github.io/2017/10/26/II-V-I-chord-processing/</link>
       <guid>suncio.github.io/2017/10/26/II-V-I-chord-processing/</guid>
-      <pubDate>Thu, 26 Oct 2017 13:18:24 GMT</pubDate>
+      <pubDate>Fri, 27 Oct 2017 04:18:24 GMT</pubDate>
       <description>
       
         
