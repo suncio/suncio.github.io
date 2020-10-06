@@ -7,7 +7,7 @@ title: Suncio's Blog
 subtitle: I’m Nobody, Who Are You? Are you nobody, too?
 description:
 author: suncio
-language: 
+language: zh-hans
 timezone:
 
 # URL
@@ -91,3 +91,8 @@ feed:
 
 # avatar
 avatar: /uploads/ava.jpg
+
+# markdown
+#markdown:
+#  plugins:
+#  - hexo-math
