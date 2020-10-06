@@ -8,8 +8,30 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description></description>
-    <pubDate>Fri, 02 Oct 2020 06:02:45 GMT</pubDate>
+    <pubDate>Tue, 06 Oct 2020 03:18:24 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Physical Simulation: Mass-Spring Systems</title>
+      <link>suncio.github.io/2020/10/05/Physical-Simulation-Mass-Spring-Systems/</link>
+      <guid>suncio.github.io/2020/10/05/Physical-Simulation-Mass-Spring-Systems/</guid>
+      <pubDate>Tue, 06 Oct 2020 02:58:29 GMT</pubDate>
+      <description>
+      
+        
+        
+          &lt;p&gt;&lt;strong&gt;Two Views of Continuums&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Lagrangian View: “What are my position and velocity?”&lt;/li&gt;
+&lt;li&gt;Eulerian View: “What
+        
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p><strong>Two Views of Continuums</strong></p><ul><li>Lagrangian View: “What are my position and velocity?”</li><li>Eulerian View: “What is the material velocity passing by”</li></ul><h5 id="Mass-Spring-Systems"><a href="#Mass-Spring-Systems" class="headerlink" title="Mass-Spring Systems"></a>Mass-Spring Systems</h5><p>Hooke’s Law</p><script type="math/tex; mode=display">\textbf{f}_{ij} = -k(||\textbf{x}_i - \textbf{x}_j||_2-l_{ij})(\widehat{\textbf{x}_i-\textbf{x}_j})\\\textbf{f}_i = \sum_{j}^{j \ne i}{\textbf{f}_{ij}}</script><p>Newton’s second law of motion</p><script type="math/tex; mode=display">\frac{\partial \textbf{v}_i}{\partial t} = \frac{1}{m}\textbf{f}_i\\\frac{\partial \textbf{x}_i}{\partial t} = \textbf{v}_i</script><h5 id="Time-integration"><a href="#Time-integration" class="headerlink" title="Time integration"></a>Time integration</h5><p><strong>Time integration - Explicit</strong></p><p>(1) Forward Euler (explicit)</p><script type="math/tex; mode=display">\textbf{v}_{t+1} = \textbf{v}_t + \Delta t \frac{\textbf{f}_t}{m}\\\textbf{x}_{t+1} = \textbf{x}_t + \Delta t \textbf{v}_t</script><p>(2) Semi implicit Euler (aka. symplectic Euler, explicit)</p><script type="math/tex; mode=display">\textbf{v}_{t+1} = \textbf{v}_t + \Delta t \frac{\textbf{f}_t}{m}\\\textbf{x}_{t+1} = \textbf{x}_t + \Delta t \textbf{v}_{t+1}</script><p>Pros:</p><p>Future depends only on past</p><p>Easy to implement</p><p>Cons:</p><p>Easy to explode:</p><script type="math/tex; mode=display">\Delta t \le c \sqrt{\frac{m}{k}} (c \sim 1)</script><p>Bad for stiff materials</p><p><strong>Time integration - Implicit</strong></p><p>Backward Euler (often with Newton’s method, implicit)</p><script type="math/tex; mode=display">\textbf{x}_{t+1} = \textbf{x}_t + \Delta t \textbf{v}_{t+1}\\\textbf{v}_{t+1} = \textbf{v}_t + \Delta t \textbf{M}^{-1}\textbf{f}(\textbf{x}_{t+1})</script><p>Estimate $\textbf{x}_{t+1}$:</p><script type="math/tex; mode=display">\textbf{v}_{t+1} = \textbf{v}_t + \Delta t \textbf{M}^{-1}\textbf{f}(\textbf{x}_{t} + \Delta t \textbf{v}_{t+1})</script><p>Linearize (one step of Newton’s method):</p><script type="math/tex; mode=display">\textbf{v}_{t+1} = \textbf{v}_t + \Delta t \textbf{M}^{-1}    \left[\textbf{f}(\textbf{x}_{t}) + \frac{\partial \textbf{f}}{\partial \textbf{x}} (\textbf{x}_{t}) \Delta t \textbf{v}_{t+1}    \right]</script><p>Clean up:</p><script type="math/tex; mode=display">\left[\textbf{I} - \Delta t^2 \textbf{M}^{-1} \frac{\partial \textbf{f}}{\partial \textbf{x}} (\textbf{x}_{t})     \right] \textbf{v}_{t+1} = \textbf{v}_t + \Delta t \textbf{M}^{-1}\textbf{f}(\textbf{x}_{t})</script><p>How to solve it</p><ul><li>Jacobi/Gauss-Seidel iterations (easy to implement)</li><li>Conjugate gradients </li></ul><p><strong>Unify explicit and implicit integrators</strong></p><script type="math/tex; mode=display">\left[\textbf{I} - \beta \Delta t^2 \textbf{M}^{-1} \frac{\partial \textbf{f}}{\partial \textbf{x}} (\textbf{x}_{t})   \right] \textbf{v}_{t+1} = \textbf{v}_t + \Delta t \textbf{M}^{-1}\textbf{f}(\textbf{x}_{t})</script><ul><li>$\beta = 0$: forward/semi-implicit Euler (explicit)</li><li>$\beta = 1/2$: middle-point (implicit)</li><li>$\beta = 1$: backward Euler (implicit)</li></ul><p><strong>Solve faster</strong></p><ul><li>Sparse matrices</li><li>Conjugate gradients</li><li>Preconditioning</li></ul>]]></content:encoded>
+      
+      <comments>suncio.github.io/2020/10/05/Physical-Simulation-Mass-Spring-Systems/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>Important Statement</title>
@@ -156,15 +178,13 @@
         
         
           &lt;p&gt;This passage is about basic knowledge of how to choose notes in scale due to harmony when improvising.&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;chord
+&lt;div class=&quot;table-container&quot;&gt;
+
         
       
       </description>
       
-      <content:encoded><![CDATA[<p>This passage is about basic knowledge of how to choose notes in scale due to harmony when improvising.</p><table><thead><tr><th>chord</th><th>mode</th><th>scale</th><th>avoided note</th></tr></thead><tbody><tr><td>大七</td><td>Ionian</td><td>1、2、3、4、5、6、7、1</td><td>4</td></tr><tr><td></td><td>Lydian</td><td>1、2、3、#4、5、6、7、1</td><td>无</td></tr><tr><td>小七</td><td>Dorian</td><td>1、2、b3、4、5、6、b7、1</td><td>6</td></tr><tr><td></td><td>旋律小调</td><td>1、2、b3、4、5、6、7、1</td><td>无</td></tr><tr><td></td><td>Aeolian</td><td>1、2、b3、4、5、b6、b7、1</td><td>b6</td></tr><tr><td>属七</td><td>Mixolydian</td><td>1、2、3、4、5、6、b7、1</td><td>4</td></tr><tr><td></td><td>半全减音阶</td><td>1、b2、#2、3、#4、5、6、b7、1</td><td>无</td></tr><tr><td></td><td>Altered(变属)</td><td>1、b2、#2、3、b5、b6、b7、1</td><td>无</td></tr><tr><td></td><td>小调Blues</td><td>1、b3、4、#4、5、b7、1</td><td>无</td></tr><tr><td></td><td>大调Blues</td><td>1、2、#2、3、5、6、1</td><td>无</td></tr><tr><td>增七</td><td>全音阶</td><td>1、2、3、b5、b6、b7、1</td><td>无</td></tr><tr><td>减七</td><td>减音阶</td><td>1、2、b3、4、b5、b6、6、7、1</td><td>无</td></tr><tr><td>半减七</td><td>Locrian</td><td>1、b2、b3、4、b5、b6、b7、1</td><td>b2</td></tr><tr><td></td><td>Locrian2</td><td>1、2、b3、4、b5、b6、b7、1</td><td>无</td></tr><tr><td>小大七</td><td>旋律小调</td><td>1、2、b3、4、5、6、7、1</td><td>无</td></tr><tr><td>属7sus4</td><td>Mixolydian</td><td>1、2、3、4、5、6、b7、1</td><td>3</td></tr><tr><td>增大七</td><td>Lydian#5</td><td>1、2、3、#4、#5、6、7、1</td><td>无</td></tr><tr><td>大六</td><td>Ionian</td><td>1、2、3、4、5、6、7、1</td><td>4</td></tr><tr><td></td><td>大调五声</td><td>1、2、3、5、6、1</td><td>无</td></tr><tr><td>小六</td><td>旋律小调</td><td>1、2、b3、4、5、6、7、1</td><td>无</td></tr><tr><td></td><td>小调五声</td><td>1、b3、4、5、6、1</td><td>无</td></tr></tbody></table>]]></content:encoded>
+      <content:encoded><![CDATA[<p>This passage is about basic knowledge of how to choose notes in scale due to harmony when improvising.</p><div class="table-container"><table><thead><tr><th>chord</th><th>mode</th><th>scale</th><th>avoided note</th></tr></thead><tbody><tr><td>大七</td><td>Ionian</td><td>1、2、3、4、5、6、7、1</td><td>4</td></tr><tr><td></td><td>Lydian</td><td>1、2、3、#4、5、6、7、1</td><td>无</td></tr><tr><td>小七</td><td>Dorian</td><td>1、2、b3、4、5、6、b7、1</td><td>6</td></tr><tr><td></td><td>旋律小调</td><td>1、2、b3、4、5、6、7、1</td><td>无</td></tr><tr><td></td><td>Aeolian</td><td>1、2、b3、4、5、b6、b7、1</td><td>b6</td></tr><tr><td>属七</td><td>Mixolydian</td><td>1、2、3、4、5、6、b7、1</td><td>4</td></tr><tr><td></td><td>半全减音阶</td><td>1、b2、#2、3、#4、5、6、b7、1</td><td>无</td></tr><tr><td></td><td>Altered(变属)</td><td>1、b2、#2、3、b5、b6、b7、1</td><td>无</td></tr><tr><td></td><td>小调Blues</td><td>1、b3、4、#4、5、b7、1</td><td>无</td></tr><tr><td></td><td>大调Blues</td><td>1、2、#2、3、5、6、1</td><td>无</td></tr><tr><td>增七</td><td>全音阶</td><td>1、2、3、b5、b6、b7、1</td><td>无</td></tr><tr><td>减七</td><td>减音阶</td><td>1、2、b3、4、b5、b6、6、7、1</td><td>无</td></tr><tr><td>半减七</td><td>Locrian</td><td>1、b2、b3、4、b5、b6、b7、1</td><td>b2</td></tr><tr><td></td><td>Locrian2</td><td>1、2、b3、4、b5、b6、b7、1</td><td>无</td></tr><tr><td>小大七</td><td>旋律小调</td><td>1、2、b3、4、5、6、7、1</td><td>无</td></tr><tr><td>属7sus4</td><td>Mixolydian</td><td>1、2、3、4、5、6、b7、1</td><td>3</td></tr><tr><td>增大七</td><td>Lydian#5</td><td>1、2、3、#4、#5、6、7、1</td><td>无</td></tr><tr><td>大六</td><td>Ionian</td><td>1、2、3、4、5、6、7、1</td><td>4</td></tr><tr><td></td><td>大调五声</td><td>1、2、3、5、6、1</td><td>无</td></tr><tr><td>小六</td><td>旋律小调</td><td>1、2、b3、4、5、6、7、1</td><td>无</td></tr><tr><td></td><td>小调五声</td><td>1、b3、4、5、6、1</td><td>无</td></tr></tbody></table></div>]]></content:encoded>
       
       <comments>suncio.github.io/2017/10/26/Notes-and-Harmony/#disqus_thread</comments>
     </item>
@@ -185,7 +205,7 @@
       
       </description>
       
-      <content:encoded><![CDATA[<p>This passage is mainly about commonly used II-V-I chord processions in music.<br><br></p><ol><li>II-IV-I<br>II-IV-I may be the most common chord procession played in jazz. In key C, it’s D-7, G7, Cmaj7.</li></ol><ul><li>Minor 7th chords are II chords.</li><li>Dominant 7th chords are V chords.</li><li>Major 7th chords are I chords.</li></ul><ol start="2"><li><p>voice leading<br><a href="https://en.m.wikipedia.org/wiki/Voice_leading" target="_blank" rel="external">wikipedia</a>: “Voice leading is the term used to describe the linear progression of melodic lines and their interaction with one another to create harmonies, according to the principles of common-practice harmony and counterpoint”<br>In II-IV-I processions, notice that as you go from the II chord to the V chord to the I chord, the 7th of each chord resolves down a half step and becomes the 3rd of the next chord. This is basic voice leading. Voice leading is the direction a particular note wants to go. It’s almost as if there is a gravitational or magnetic pull on the 7th, urging it to resolve down a half-step.</p></li><li><p>Use II-V-I to change key a step down<br>For example, Dm-G-C-Cm-F-Bb could change key from C to Bb. Simply changing 3rd note of chord C a half-step down makes it Cm, in other word, I(C) becomes II(Bb). Then key in C becomes key in Bb.</p></li></ol>]]></content:encoded>
+      <content:encoded><![CDATA[<p>This passage is mainly about commonly used II-V-I chord processions in music.<br><br></p><ol><li>II-IV-I<br>II-IV-I may be the most common chord procession played in jazz. In key C, it’s D-7, G7, Cmaj7.</li></ol><ul><li>Minor 7th chords are II chords.</li><li>Dominant 7th chords are V chords.</li><li>Major 7th chords are I chords.</li></ul><ol><li><p>voice leading<br><a href="https://en.m.wikipedia.org/wiki/Voice_leading" target="_blank" rel="external">wikipedia</a>: “Voice leading is the term used to describe the linear progression of melodic lines and their interaction with one another to create harmonies, according to the principles of common-practice harmony and counterpoint”<br>In II-IV-I processions, notice that as you go from the II chord to the V chord to the I chord, the 7th of each chord resolves down a half step and becomes the 3rd of the next chord. This is basic voice leading. Voice leading is the direction a particular note wants to go. It’s almost as if there is a gravitational or magnetic pull on the 7th, urging it to resolve down a half-step.</p></li><li><p>Use II-V-I to change key a step down<br>For example, Dm-G-C-Cm-F-Bb could change key from C to Bb. Simply changing 3rd note of chord C a half-step down makes it Cm, in other word, I(C) becomes II(Bb). Then key in C becomes key in Bb.</p></li></ol>]]></content:encoded>
       
       <comments>suncio.github.io/2017/10/26/II-V-I-chord-processing/#disqus_thread</comments>
     </item>
