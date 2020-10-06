@@ -6,32 +6,44 @@ tags:
 mathjax: true
 ---
 
+### Introduction
+
 **Two Views of Continuums**
 
-- Lagrangian View: "What are my position and velocity?"
-- Eulerian View: "What is the material velocity passing by"
+There are two basic methods for solving fluid equations
+
+- Lagrangian View: "What are my position and velocity?" 
+
+  \- Method based on particles
+
+- Eulerian View: "What is the material velocity passing by?" 
+
+  \- Method based on grid
 
 
 
+### Mass-Spring Systems
 
+Mass Spring Systems are a physical simulation based on Lagrangian view, an object are seen as  . Mass-spring systems are good for  
 
-##### Mass-Spring Systems
-
-Hooke's Law
+**Hooke's Law**
 $$
 \textbf{f}_{ij} = -k(||\textbf{x}_i - \textbf{x}_j||_2-l_{ij})(\widehat{\textbf{x}_i-\textbf{x}_j})
 \\
+\ 
+\\
 \textbf{f}_i = \sum_{j}^{j \ne i}{\textbf{f}_{ij}}
 $$
-Newton's second law of motion
+**Newton's second law of motion**
 $$
 \frac{\partial \textbf{v}_i}{\partial t} = \frac{1}{m}\textbf{f}_i
+\\
+\ 
 \\
 \frac{\partial \textbf{x}_i}{\partial t} = \textbf{v}_i
 $$
 
-
-##### Time integration
+### Time integration
 
 **Time integration - Explicit**
 
@@ -47,21 +59,18 @@ $$
 \\
 \textbf{x}_{t+1} = \textbf{x}_t + \Delta t \textbf{v}_{t+1}
 $$
-Pros:
-
-Future depends only on past
-
-Easy to implement
 
 
+| Pros                        | Cons                    |
+| --------------------------- | ----------------------- |
+| Future depends only on past | Easy to explode         |
+| Easy to implement           | Bad for stiff materials |
 
-Cons:
-
-Easy to explode:
+Explosion limit:
 $$
 \Delta t \le c \sqrt{\frac{m}{k}} (c \sim 1)
 $$
-Bad for stiff materials
+
 
 
 
