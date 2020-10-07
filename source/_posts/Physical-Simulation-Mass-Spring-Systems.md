@@ -6,7 +6,9 @@ tags:
 mathjax: true
 ---
 
-### Introduction
+This a learning note from the [class](https://forum.taichi.graphics/t/topic/272) given by Yuanming Hu about **Physical Simulation**
+
+## Introduction
 
 **Two Views of Continuums**
 
@@ -16,13 +18,17 @@ There are two basic methods for solving fluid equations
 
   \- Method based on particles
 
+  ![lagrange view](/images/lagrange.gif)
+
 - Eulerian View: "What is the material velocity passing by?" 
 
   \- Method based on grid
+  
+  ![eulerian view](/images/eulerian.gif)
 
 
 
-### Mass-Spring Systems
+## Mass-Spring Systems
 
 Mass Spring Systems are a physical simulation based on Lagrangian view, an object are seen as  . Mass-spring systems are good for  
 
@@ -43,7 +49,9 @@ $$
 \frac{\partial \textbf{x}_i}{\partial t} = \textbf{v}_i
 $$
 
-### Time integration
+
+
+## Time integration
 
 **Time integration - Explicit**
 
