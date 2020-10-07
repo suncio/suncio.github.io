@@ -98,18 +98,21 @@
 
 
 
-<meta name="description" content="IntroductionTwo Views of Continuums There are two basic methods for solving fluid equations  Lagrangian View: “What are my position and velocity?”  - Method based on particles  Eulerian View: “What is">
+<meta name="description" content="This a learning note from the class given by Yuanming Hu about Physical Simulation IntroductionTwo Views of Continuums There are two basic methods for solving fluid equations  Lagrangian View: “What a">
 <meta name="keywords" content="Physical Simulation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Physical Simulation: Mass-Spring Systems">
 <meta property="og:url" content="https://suncio.me/2020/10/05/Physical-Simulation-Mass-Spring-Systems/index.html">
 <meta property="og:site_name" content="Suncio&#39;s Blog">
-<meta property="og:description" content="IntroductionTwo Views of Continuums There are two basic methods for solving fluid equations  Lagrangian View: “What are my position and velocity?”  - Method based on particles  Eulerian View: “What is">
+<meta property="og:description" content="This a learning note from the class given by Yuanming Hu about Physical Simulation IntroductionTwo Views of Continuums There are two basic methods for solving fluid equations  Lagrangian View: “What a">
 <meta property="og:locale" content="zh-hans">
-<meta property="og:updated_time" content="2020-10-06T05:09:04.766Z">
+<meta property="og:image" content="https://suncio.me/images/lagrange.gif">
+<meta property="og:image" content="https://suncio.me/images/eulerian.gif">
+<meta property="og:updated_time" content="2020-10-07T03:34:14.110Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Physical Simulation: Mass-Spring Systems">
-<meta name="twitter:description" content="IntroductionTwo Views of Continuums There are two basic methods for solving fluid equations  Lagrangian View: “What are my position and velocity?”  - Method based on particles  Eulerian View: “What is">
+<meta name="twitter:description" content="This a learning note from the class given by Yuanming Hu about Physical Simulation IntroductionTwo Views of Continuums There are two basic methods for solving fluid equations  Lagrangian View: “What a">
+<meta name="twitter:image" content="https://suncio.me/images/lagrange.gif">
 
 
 
@@ -213,7 +216,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Home
           </a>
         </li>
       
@@ -223,7 +226,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Kategorien
+            Categories
           </a>
         </li>
       
@@ -233,7 +236,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -307,7 +310,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-05T19:58:29-07:00">
                 2020-10-05
@@ -347,17 +350,20 @@
       
 
       
-        <h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p><strong>Two Views of Continuums</strong></p>
+        <p>This a learning note from the <a href="https://forum.taichi.graphics/t/topic/272" target="_blank" rel="external">class</a> given by Yuanming Hu about <strong>Physical Simulation</strong></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>Two Views of Continuums</strong></p>
 <p>There are two basic methods for solving fluid equations</p>
 <ul>
 <li><p>Lagrangian View: “What are my position and velocity?” </p>
 <p>- Method based on particles</p>
+<p><img src="/images/lagrange.gif" alt="lagrange view"></p>
 </li>
 <li><p>Eulerian View: “What is the material velocity passing by?” </p>
 <p>- Method based on grid</p>
+<p><img src="/images/eulerian.gif" alt="eulerian view"></p>
 </li>
 </ul>
-<h3 id="Mass-Spring-Systems"><a href="#Mass-Spring-Systems" class="headerlink" title="Mass-Spring Systems"></a>Mass-Spring Systems</h3><p>Mass Spring Systems are a physical simulation based on Lagrangian view, an object are seen as  . Mass-spring systems are good for  </p>
+<h2 id="Mass-Spring-Systems"><a href="#Mass-Spring-Systems" class="headerlink" title="Mass-Spring Systems"></a>Mass-Spring Systems</h2><p>Mass Spring Systems are a physical simulation based on Lagrangian view, an object are seen as  . Mass-spring systems are good for  </p>
 <p><strong>Hooke’s Law</strong></p>
 <script type="math/tex; mode=display">
 \textbf{f}_{ij} = -k(||\textbf{x}_i - \textbf{x}_j||_2-l_{ij})(\widehat{\textbf{x}_i-\textbf{x}_j})
@@ -370,7 +376,7 @@
 \\
 \ 
 \\
-\frac{\partial \textbf{x}_i}{\partial t} = \textbf{v}_i</script><h3 id="Time-integration"><a href="#Time-integration" class="headerlink" title="Time integration"></a>Time integration</h3><p><strong>Time integration - Explicit</strong></p>
+\frac{\partial \textbf{x}_i}{\partial t} = \textbf{v}_i</script><h2 id="Time-integration"><a href="#Time-integration" class="headerlink" title="Time integration"></a>Time integration</h2><p><strong>Time integration - Explicit</strong></p>
 <p>(1) Forward Euler (explicit)</p>
 <script type="math/tex; mode=display">
 \textbf{v}_{t+1} = \textbf{v}_t + \Delta t \frac{\textbf{f}_t}{m}
@@ -470,6 +476,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/10/06/Physical-Simulation-Smoothed-Particle-Hydrodynamics/" rel="prev" title="Physical Simulation: Smoothed Particle Hydrodynamics">
+                Physical Simulation: Smoothed Particle Hydrodynamics <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -522,10 +532,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -545,8 +555,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -559,7 +569,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -627,7 +637,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mass-Spring-Systems"><span class="nav-number">2.</span> <span class="nav-text">Mass-Spring Systems</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Time-integration"><span class="nav-number">3.</span> <span class="nav-text">Time integration</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mass-Spring-Systems"><span class="nav-number">2.</span> <span class="nav-text">Mass-Spring Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Time-integration"><span class="nav-number">3.</span> <span class="nav-text">Time integration</span></a></li></ol></div>
             
 
           </div>
@@ -659,7 +669,7 @@
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">

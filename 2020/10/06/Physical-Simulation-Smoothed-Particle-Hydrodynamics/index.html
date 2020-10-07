@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Physical Simulation," />
 
 
 
@@ -98,13 +98,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Suncio&#39;s Blog">
-<meta property="og:url" content="https://suncio.me/archives/2017/11/index.html">
+<meta name="description" content="Lagrange fluid simulation: Smoothed particle hydrodynamicsHigh-level idea: use particle carrying samples of physical quantities, and a kernel function $W$, to approximate continuous fields:  A(\textbf">
+<meta name="keywords" content="Physical Simulation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Physical Simulation: Smoothed Particle Hydrodynamics">
+<meta property="og:url" content="https://suncio.me/2020/10/06/Physical-Simulation-Smoothed-Particle-Hydrodynamics/index.html">
 <meta property="og:site_name" content="Suncio&#39;s Blog">
+<meta property="og:description" content="Lagrange fluid simulation: Smoothed particle hydrodynamicsHigh-level idea: use particle carrying samples of physical quantities, and a kernel function $W$, to approximate continuous fields:  A(\textbf">
 <meta property="og:locale" content="zh-hans">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/SPHInterpolationColorsVerbose.svg/440px-SPHInterpolationColorsVerbose.svg.png">
+<meta property="og:updated_time" content="2020-10-07T03:18:33.297Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Suncio&#39;s Blog">
+<meta name="twitter:title" content="Physical Simulation: Smoothed Particle Hydrodynamics">
+<meta name="twitter:description" content="Lagrange fluid simulation: Smoothed particle hydrodynamicsHigh-level idea: use particle carrying samples of physical quantities, and a kernel function $W$, to approximate continuous fields:  A(\textbf">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/SPHInterpolationColorsVerbose.svg/440px-SPHInterpolationColorsVerbose.svg.png">
 
 
 
@@ -133,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="https://suncio.me/archives/2017/11/"/>
+  <link rel="canonical" href="https://suncio.me/2020/10/06/Physical-Simulation-Smoothed-Particle-Hydrodynamics/"/>
 
 
 
 
 
-  <title>Archive | Suncio's Blog</title>
+  <title>Physical Simulation: Smoothed Particle Hydrodynamics | Suncio's Blog</title>
   
 
 
@@ -167,7 +174,7 @@
     
   
 
-  <div class="container sidebar-position-right  page-archive  ">
+  <div class="container sidebar-position-right page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -261,74 +268,213 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        Um..! 5 posts in total. Keep on posting.
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://suncio.me/2020/10/06/Physical-Simulation-Smoothed-Particle-Hydrodynamics/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="suncio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/ava.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Suncio's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/11/29/Ruskell-Algorithms-1-Matrix-Chain-Order/" itemprop="url">
-              
-                <span itemprop="name">Ruskell & Algorithms (1) -- Matrix Chain Order</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Physical Simulation: Smoothed Particle Hydrodynamics</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-29T10:10:12-08:00"
-              content="2017-11-29" >
-          11-29
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-06T20:02:38-07:00">
+                2020-10-06
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <h5 id="Lagrange-fluid-simulation-Smoothed-particle-hydrodynamics"><a href="#Lagrange-fluid-simulation-Smoothed-particle-hydrodynamics" class="headerlink" title="Lagrange fluid simulation: Smoothed particle hydrodynamics"></a>Lagrange fluid simulation: Smoothed particle hydrodynamics</h5><p><strong>High-level idea:</strong> use particle carrying samples of physical quantities, and a kernel function $W$, to approximate continuous fields:</p>
+<script type="math/tex; mode=display">
+A(\textbf{x}) = \sum_{i}{A_i\frac{m_i}{\rho_i}W\left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}</script><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/SPHInterpolationColorsVerbose.svg/440px-SPHInterpolationColorsVerbose.svg.png" alt="SPH particles and their kernel"></p>
+<ul>
+<li>Originally proposed for astrophysical problems</li>
+<li>No meshes. Very suitable for free-surface flows!</li>
+<li>Easy to understand intuitively: just imagine each particle is a small parcel of water (although strictly not the case)</li>
+</ul>
+<p><strong>Implementing SPH using the Equation of States (EOS)</strong></p>
+<p>Also know as Weakly Compressible SPH (WCSPH).</p>
+<p>Momentum equation: ($\rho$: density; $B$: bulk modulus; $\gamma$: constant, usually $\sim 7$ )</p>
+<script type="math/tex; mode=display">
+\frac{D\textbf{v}}{Dt} = -\frac{1}{\rho} \nabla p + \textbf{g}
+,\ \ \ 
+p = B\left( \left( \frac{\rho}{\rho_0} \right)^{\gamma} - 1 \right)
+\\
+\ 
+\\
+\
+\\
+A(\textbf{x}) = \sum_{i}{A_i\frac{m_i}{\rho_i}W\left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}
+,\ \ \ 
+\rho_i= \sum_j{ m_j W \left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}</script><p><strong>Gradients in SPH</strong></p>
+<script type="math/tex; mode=display">
+A(\textbf{x}) = \sum_{i}{A_i\frac{m_i}{\rho_i}W\left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}
+\\
+\
+\\
+\nabla A_i = \rho_i \sum_{j} m_j \left( \frac{A_i}{\rho_i^2} + \frac{A_j}{\rho_j^2} \right) \nabla_{\textbf{x}_i} W\left( ||\textbf{x} - \textbf{x}_j||_2, h \right)</script><ul>
+<li>Not really accurate</li>
+<li>But at least symmetric and momentum conversing</li>
+</ul>
+<p>Now we can compute $\nabla p_i$</p>
+<p><strong>SPH Simulation Cycle</strong></p>
+<ol>
+<li><p>For each particle $i$, compute $\rho_i= \sum_j{ m_j W \left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}$</p>
+</li>
+<li><p>For each particle $i$, compute $\nabla p_i$ using the gradient operator</p>
+</li>
+<li><p>Symplectic Euler step:</p>
+<script type="math/tex; mode=display">
+\textbf{v}_{t+1} = \textbf{v}_t + \Delta t \frac{D\textbf{v}}{Dt}
+\\
+\textbf{x}_{t+1} = \textbf{x}_t + \Delta t \textbf{v}_{t+1}\</script></li>
+</ol>
+<p><strong>Variants of SPH</strong></p>
+<p><strong>Courant-Friedrichs-Lewy (CFL) condition</strong></p>
+<p>One upper bound of time step size:</p>
+<script type="math/tex; mode=display">
+C = \frac{u \Delta t}{\Delta x} \le C_{max} \sim 1</script><ul>
+<li>$C$: CFL number (Courant number, or simple the CFL)</li>
+<li>$\Delta t$: time step</li>
+<li>$\Delta x$: length interval (e.g. particle radius and grid size)</li>
+<li>$u$: maximum (velocity)</li>
+</ul>
+<p>Application: estimating allowed time step in (explicit) time integrations. Typical $C_{max}$ in graphics:</p>
+<ul>
+<li>SPH: ~ 0.4</li>
+<li>MPM: 0.3 ~ 1</li>
+<li>FLIP fluid (smoke): 1 ~ 5+</li>
+</ul>
+<p><strong>Accelerating SPH: Neighborhood search</strong></p>
+<p>So far, per sub-step complexity of SPH is $O(n^2)$. This is too costly to be practical. In practice, people build spatial data structure such as voxel grid to accelerate neighborhood search. This reduces time complexity to $O(n)$.</p>
+<p>Reference: <a href="https://github.com/InteractiveComputerGraphics/CompactNSearch" target="_blank" rel="external">Compact Hashing</a></p>
+<p><strong>Extend reading</strong></p>
+<p>SPH Fluids in Computer Graphics: <a href="https://cg.informatik.uni-freiburg.de/publications/2014_EG_SPH_STAR.pdf" target="_blank" rel="external">https://cg.informatik.uni-freiburg.de/publications/2014_EG_SPH_STAR.pdf</a></p>
+<p>A tutorial for SPH: <a href="https://interactivecomputergraphics.github.io/SPH-Tutorial/" target="_blank" rel="external">Smoothed Particle Hydrodynamics Techniques for the Physics Based Simulation of Fluids and Solids</a></p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Physical-Simulation/" rel="tag"># Physical Simulation</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/05/Physical-Simulation-Mass-Spring-Systems/" rel="next" title="Physical Simulation: Mass-Spring Systems">
+                <i class="fa fa-chevron-left"></i> Physical Simulation: Mass-Spring Systems
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -336,6 +482,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -356,8 +506,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/ava.jpg"
@@ -444,6 +603,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Lagrange-fluid-simulation-Smoothed-particle-hydrodynamics"><span class="nav-number">1.</span> <span class="nav-text">Lagrange fluid simulation: Smoothed particle hydrodynamics</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -563,11 +738,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
 
 
   
