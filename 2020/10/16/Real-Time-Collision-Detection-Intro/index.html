@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Physical Simulation," />
+  <meta name="keywords" content="Collision Detection," />
 
 
 
@@ -98,20 +98,23 @@
 
 
 
-<meta name="description" content="Lagrange fluid simulation: Smoothed particle hydrodynamicsHigh-level idea: use particle carrying samples of physical quantities, and a kernel function $W$, to approximate continuous fields:  A(\textbf">
-<meta name="keywords" content="Physical Simulation">
+<meta name="description" content="A learning note while reading Real-Time Collision Detection by Christer Ericson This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro wil">
+<meta name="keywords" content="Collision Detection">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Physical Simulation: Smoothed Particle Hydrodynamics">
-<meta property="og:url" content="https://suncio.me/2020/10/06/Physical-Simulation-Smoothed-Particle-Hydrodynamics/index.html">
+<meta property="og:title" content="Real Time Collision Detection: Intro">
+<meta property="og:url" content="https://suncio.me/2020/10/16/Real-Time-Collision-Detection-Intro/index.html">
 <meta property="og:site_name" content="Suncio&#39;s Blog">
-<meta property="og:description" content="Lagrange fluid simulation: Smoothed particle hydrodynamicsHigh-level idea: use particle carrying samples of physical quantities, and a kernel function $W$, to approximate continuous fields:  A(\textbf">
+<meta property="og:description" content="A learning note while reading Real-Time Collision Detection by Christer Ericson This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro wil">
 <meta property="og:locale" content="zh-hans">
-<meta property="og:image" content="https://suncio.me/images/SPHInterpolationColorsVerbose.svg.png">
-<meta property="og:updated_time" content="2020-10-14T06:28:15.810Z">
+<meta property="og:image" content="https://suncio.me/images/ConvexConcave.png">
+<meta property="og:image" content="https://suncio.me/images/ConvexHull.png">
+<meta property="og:image" content="https://suncio.me/images/MinkowskiSum.png">
+<meta property="og:image" content="https://suncio.me/images/MinkowskiDiff.png">
+<meta property="og:updated_time" content="2020-10-15T07:20:28.923Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Physical Simulation: Smoothed Particle Hydrodynamics">
-<meta name="twitter:description" content="Lagrange fluid simulation: Smoothed particle hydrodynamicsHigh-level idea: use particle carrying samples of physical quantities, and a kernel function $W$, to approximate continuous fields:  A(\textbf">
-<meta name="twitter:image" content="https://suncio.me/images/SPHInterpolationColorsVerbose.svg.png">
+<meta name="twitter:title" content="Real Time Collision Detection: Intro">
+<meta name="twitter:description" content="A learning note while reading Real-Time Collision Detection by Christer Ericson This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro wil">
+<meta name="twitter:image" content="https://suncio.me/images/ConvexConcave.png">
 
 
 
@@ -140,13 +143,13 @@
 
 
 
-  <link rel="canonical" href="https://suncio.me/2020/10/06/Physical-Simulation-Smoothed-Particle-Hydrodynamics/"/>
+  <link rel="canonical" href="https://suncio.me/2020/10/16/Real-Time-Collision-Detection-Intro/"/>
 
 
 
 
 
-  <title>Physical Simulation: Smoothed Particle Hydrodynamics | Suncio's Blog</title>
+  <title>Real Time Collision Detection: Intro | Suncio's Blog</title>
   
 
 
@@ -282,7 +285,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://suncio.me/2020/10/06/Physical-Simulation-Smoothed-Particle-Hydrodynamics/">
+    <link itemprop="mainEntityOfPage" href="https://suncio.me/2020/10/16/Real-Time-Collision-Detection-Intro/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="suncio">
@@ -299,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Physical Simulation: Smoothed Particle Hydrodynamics</h1>
+          <h1 class="post-title" itemprop="name headline">Real Time Collision Detection: Intro</h1>
         
 
         <div class="post-meta">
@@ -311,8 +314,8 @@
               
                 <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-06T20:02:38-07:00">
-                2020-10-06
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-16T23:00:12-07:00">
+                2020-10-16
               </time>
             
 
@@ -349,68 +352,47 @@
       
 
       
-        <h2 id="Lagrange-fluid-simulation-Smoothed-particle-hydrodynamics"><a href="#Lagrange-fluid-simulation-Smoothed-particle-hydrodynamics" class="headerlink" title="Lagrange fluid simulation: Smoothed particle hydrodynamics"></a>Lagrange fluid simulation: Smoothed particle hydrodynamics</h2><p><strong>High-level idea:</strong> use particle carrying samples of physical quantities, and a kernel function $W$, to approximate continuous fields:</p>
-<script type="math/tex; mode=display">
-A(\textbf{x}) = \sum_{i}{A_i\frac{m_i}{\rho_i}W\left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}</script><p><img src="/images/SPHInterpolationColorsVerbose.svg.png" alt="SPH particles and their kernel"></p>
+        <p>A learning note while reading <em>Real-Time Collision Detection</em> by Christer Ericson</p>
+<p>This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro will list some of the key concepts used in <strong>collision detection</strong> that I haven’t heard of or find important enough to re-memorize again.</p>
+<h2 id="Polygons"><a href="#Polygons" class="headerlink" title="Polygons"></a>Polygons</h2><p>​    A <em>polygon</em> is a closed figure with <em>n</em> sides, defined by an ordered set of three or more points in the plane in such a way that each point is connected to the next (and the last to the first) with a line segment. </p>
 <ul>
-<li>Originally proposed for astrophysical problems</li>
-<li>No meshes. Very suitable for free-surface flows!</li>
-<li>Easy to understand intuitively: just imagine each particle is a small parcel of water (although strictly not the case)</li>
-</ul>
-<h2 id="Implementing-SPH-using-the-Equation-of-States-EOS"><a href="#Implementing-SPH-using-the-Equation-of-States-EOS" class="headerlink" title="Implementing SPH using the Equation of States (EOS)"></a>Implementing SPH using the Equation of States (EOS)</h2><p>Also know as Weakly Compressible SPH (WCSPH).</p>
-<p>Momentum equation: ($\rho$: density; $B$: bulk modulus; $\gamma$: constant, usually $\sim 7$ )</p>
-<script type="math/tex; mode=display">
-\frac{D\textbf{v}}{Dt} = -\frac{1}{\rho} \nabla p + \textbf{g}
-,\ \ \ 
-p = B\left( \left( \frac{\rho}{\rho_0} \right)^{\gamma} - 1 \right)
-\\
-\ 
-\\
-\
-\\
-A(\textbf{x}) = \sum_{i}{A_i\frac{m_i}{\rho_i}W\left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}
-,\ \ \ 
-\rho_i= \sum_j{ m_j W \left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}</script><h2 id="Gradients-in-SPH"><a href="#Gradients-in-SPH" class="headerlink" title="Gradients in SPH"></a>Gradients in SPH</h2><script type="math/tex; mode=display">
-A(\textbf{x}) = \sum_{i}{A_i\frac{m_i}{\rho_i}W\left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}
-\\
-\
-\\
-\nabla A_i = \rho_i \sum_{j} m_j \left( \frac{A_i}{\rho_i^2} + \frac{A_j}{\rho_j^2} \right) \nabla_{\textbf{x}_i} W\left( ||\textbf{x} - \textbf{x}_j||_2, h \right)</script><ul>
-<li>Not really accurate</li>
-<li>But at least symmetric and momentum conversing</li>
-</ul>
-<p>Now we can compute $\nabla p_i$</p>
-<h2 id="SPH-Simulation-Cycle"><a href="#SPH-Simulation-Cycle" class="headerlink" title="SPH Simulation Cycle"></a>SPH Simulation Cycle</h2><ol>
-<li><p>For each particle $i$, compute $\rho_i= \sum_j{ m_j W \left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}$</p>
+<li><p><strong>Simple</strong>: A polygon is <em>simple</em> if no two nonconsecutive edges have a point in common. A simple polygon partitions the plane into two disjoint parts: the <em>interior</em> (the bounded area covered by the polygon) and the <em>exterior</em> (the unbounded area outside the polygon).</p>
 </li>
-<li><p>For each particle $i$, compute $\nabla p_i$ using the gradient operator</p>
+<li><p><strong>Convex/Concave vertex</strong>: A vertex is a convex vertex if the interior angle is less than or equal to 180 degrees. If the angle is larger than 180 degrees, it is instead called a concave (or reflex) vertex.</p>
+<p><img src="/images/ConvexConcave.png" alt="Convex vertex and Concave vertex"></p>
 </li>
-<li><p>Symplectic Euler step:</p>
-<script type="math/tex; mode=display">
-\textbf{v}_{t+1} = \textbf{v}_t + \Delta t \frac{D\textbf{v}}{Dt}
-\\
-\textbf{x}_{t+1} = \textbf{x}_t + \Delta t \textbf{v}_{t+1}\</script></li>
-</ol>
-<p><strong>Variants of SPH</strong></p>
-<h2 id="Courant-Friedrichs-Lewy-CFL-condition"><a href="#Courant-Friedrichs-Lewy-CFL-condition" class="headerlink" title="Courant-Friedrichs-Lewy (CFL) condition"></a>Courant-Friedrichs-Lewy (CFL) condition</h2><p>One upper bound of time step size:</p>
-<script type="math/tex; mode=display">
-C = \frac{u \Delta t}{\Delta x} \le C_{max} \sim 1</script><ul>
-<li>$C$: CFL number (Courant number, or simple the CFL)</li>
-<li>$\Delta t$: time step</li>
-<li>$\Delta x$: length interval (e.g. particle radius and grid size)</li>
-<li>$u$: maximum (velocity)</li>
+<li><p><strong>Convex/Concave polygon</strong>: A polygon <em>P</em> is a convex polygon if all line segments between any two points of <em>P</em> lie fully inside <em>P</em>. A polygon that is not convex is called a concave polygon. A polygon with one or more concave vertices is necessarily concave, but a polygon with only convex vertices is not always convex.</p>
+</li>
+<li><p><strong>Convex hull</strong>: A convex point set $S$ is a set of points wherein the line segment between any two points in $S$ is also in $S$. Given a point set $S$, the convex hull of $S$, denoted $CH(S)$, is the smallest convex point set fully containing $S$. $CH(S)$ can also be described as the intersection of all convex point sets containing $S$. </p>
+<p><img src="/images/ConvexHull.png" alt="Convex Hull"></p>
+</li>
+<li><p><strong>Affine hull</strong>: Related to the convex hull is the affine hull, $AH(S)$. The affine hull is the lowest dimensional hyperplane that contains all points of $S$. That is, if $S$ contains just one point, $AH(S)$ is the point; if $S$ contains two points, $AH(S)$ is the line through them; if $S$ contains three noncollinear points, $AH(S)$ is the plane determined by them; and if $S$ contains four (or more) non co-planar points, $AH(S)$ is all of $\mathbb{R}^3$.</p>
+</li>
 </ul>
-<p>Application: estimating allowed time step in (explicit) time integrations. Typical $C_{max}$ in graphics:</p>
-<ul>
-<li>SPH: ~ 0.4</li>
-<li>MPM: 0.3 ~ 1</li>
-<li>FLIP fluid (smoke): 1 ~ 5+</li>
-</ul>
-<h2 id="Accelerating-SPH-Neighborhood-search"><a href="#Accelerating-SPH-Neighborhood-search" class="headerlink" title="Accelerating SPH: Neighborhood search"></a>Accelerating SPH: Neighborhood search</h2><p>So far, per sub-step complexity of SPH is $O(n^2)$. This is too costly to be practical. In practice, people build spatial data structure such as voxel grid to accelerate neighborhood search. This reduces time complexity to $O(n)$.</p>
-<p>Reference: <a href="https://github.com/InteractiveComputerGraphics/CompactNSearch" target="_blank" rel="external">Compact Hashing</a></p>
-<h2 id="Extend-reading"><a href="#Extend-reading" class="headerlink" title="Extend reading"></a>Extend reading</h2><p>SPH Fluids in Computer Graphics: <a href="https://cg.informatik.uni-freiburg.de/publications/2014_EG_SPH_STAR.pdf" target="_blank" rel="external">https://cg.informatik.uni-freiburg.de/publications/2014_EG_SPH_STAR.pdf</a></p>
-<p>A tutorial for SPH: <a href="https://interactivecomputergraphics.github.io/SPH-Tutorial/" target="_blank" rel="external">Smoothed Particle Hydrodynamics Techniques for the Physics Based Simulation of Fluids and Solids</a></p>
-
+<h3 id="Test-Polygon-Convexity"><a href="#Test-Polygon-Convexity" class="headerlink" title="Test Polygon Convexity"></a>Test Polygon Convexity</h3><h2 id="Polyhedra"><a href="#Polyhedra" class="headerlink" title="Polyhedra"></a>Polyhedra</h2><h2 id="Voronoi-Diagram"><a href="#Voronoi-Diagram" class="headerlink" title="Voronoi Diagram"></a>Voronoi Diagram</h2><p>The Voronoi diagram is named after Georgy Voronoy, and is also called a <strong>Voronoi tessellation</strong>, a <strong>Voronoi decomposition</strong>, a <strong>Voronoi partition</strong>, or a <strong>Dirichlet tessellation</strong>. Voronoi cells are also known as <strong>Thiessen polygons</strong>.</p>
+<script type="math/tex; mode=display">
+R_{k}=\{x\in X\mid d(x,P_{k})\leq d(x,P_{j})\;{\text{for all}}\;j\neq k\}</script><h2 id="Minkowski-Sum-and-Difference"><a href="#Minkowski-Sum-and-Difference" class="headerlink" title="Minkowski Sum and Difference"></a>Minkowski Sum and Difference</h2><h3 id="Minkowski-Sum"><a href="#Minkowski-Sum" class="headerlink" title="Minkowski Sum"></a>Minkowski Sum</h3><p>​    Let $A$ and $B$ be two point sets, and let $\mathbf{a}$ and $\mathbf{b}$ be the position vectors corresponding to pairs of points in $A$ and $B$. The Minkowski sum, $A \oplus B$, is then defined as the set</p>
+<script type="math/tex; mode=display">
+A \oplus B=\{\mathbf {a} + \mathbf {b} \,|\,\mathbf {a} \in A,\ \mathbf {b} \in B\}</script><p>where $\mathbf {a} + \mathbf {b}$ is the vector sum of the position vectors $\mathbf{a}$ and $\mathbf{b}$. </p>
+<p><img src="/images/MinkowskiSum.png" alt="Minkowski Sum Example"></p>
+<h3 id="Minkowski-Difference"><a href="#Minkowski-Difference" class="headerlink" title="Minkowski Difference"></a>Minkowski Difference</h3><p>​    The Minkowski difference of two point sets $A$ and $B$ is defined analogously to the Minkowski sum:</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+A \ominus B &= \{\mathbf {a} - \mathbf {b} \,|\,\mathbf {a} \in A,\ \mathbf {b} \in B\}\\
+&= A \oplus (-B) 
+\end{aligned}
+\end{equation}</script><p>​    The Minkowski difference is important from a collision detection perspective because two point sets $A$ and $B$ collide (that is, have one or more points in common) <strong>if and only if</strong> their Minkowski difference $C (C = A \ominus B)$ contains the origin:</p>
+<p><img src="/images/MinkowskiDiff.png" alt="Minkowski Diff Example"></p>
+<p>​    In fact, it is possible to establish an even stronger result: computing the minimum distance between A and B is equivalent to computing the minimum distance between C and the origin. This fact is utilized in the GJK algorithm:</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+distance(A, B) 
+&= min\left\{ \| \mathbf{a} - \mathbf{b} \| \,:\,\mathbf {a} \in A,\, \mathbf {b} \in B\ \right\}\\
+&= min\left\{ \| \mathbf{c} \| \,:\,\mathbf {c} \in A \ominus B \right\}
+\end{aligned}
+\end{equation}</script>
       
     </div>
     
@@ -427,7 +409,7 @@ C = \frac{u \Delta t}{\Delta x} \le C_{max} \sim 1</script><ul>
       
         <div class="post-tags">
           
-            <a href="/tags/Physical-Simulation/" rel="tag"># Physical Simulation</a>
+            <a href="/tags/Collision-Detection/" rel="tag"># Collision Detection</a>
           
         </div>
       
@@ -440,8 +422,8 @@ C = \frac{u \Delta t}{\Delta x} \le C_{max} \sim 1</script><ul>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/10/05/Physical-Simulation-Mass-Spring-Systems/" rel="next" title="Physical Simulation: Mass-Spring Systems">
-                <i class="fa fa-chevron-left"></i> Physical Simulation: Mass-Spring Systems
+              <a href="/2020/10/06/Physical-Simulation-Smoothed-Particle-Hydrodynamics/" rel="next" title="Physical Simulation: Smoothed Particle Hydrodynamics">
+                <i class="fa fa-chevron-left"></i> Physical Simulation: Smoothed Particle Hydrodynamics
               </a>
             
           </div>
@@ -449,10 +431,6 @@ C = \frac{u \Delta t}{\Delta x} \le C_{max} \sim 1</script><ul>
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/10/16/Real-Time-Collision-Detection-Intro/" rel="prev" title="Real Time Collision Detection: Intro">
-                Real Time Collision Detection: Intro <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -611,7 +589,7 @@ C = \frac{u \Delta t}{\Delta x} \le C_{max} \sim 1</script><ul>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lagrange-fluid-simulation-Smoothed-particle-hydrodynamics"><span class="nav-number">1.</span> <span class="nav-text">Lagrange fluid simulation: Smoothed particle hydrodynamics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementing-SPH-using-the-Equation-of-States-EOS"><span class="nav-number">2.</span> <span class="nav-text">Implementing SPH using the Equation of States (EOS)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradients-in-SPH"><span class="nav-number">3.</span> <span class="nav-text">Gradients in SPH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPH-Simulation-Cycle"><span class="nav-number">4.</span> <span class="nav-text">SPH Simulation Cycle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Courant-Friedrichs-Lewy-CFL-condition"><span class="nav-number">5.</span> <span class="nav-text">Courant-Friedrichs-Lewy (CFL) condition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Accelerating-SPH-Neighborhood-search"><span class="nav-number">6.</span> <span class="nav-text">Accelerating SPH: Neighborhood search</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extend-reading"><span class="nav-number">7.</span> <span class="nav-text">Extend reading</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Polygons"><span class="nav-number">1.</span> <span class="nav-text">Polygons</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Test-Polygon-Convexity"><span class="nav-number">1.1.</span> <span class="nav-text">Test Polygon Convexity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Polyhedra"><span class="nav-number">2.</span> <span class="nav-text">Polyhedra</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Voronoi-Diagram"><span class="nav-number">3.</span> <span class="nav-text">Voronoi Diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Minkowski-Sum-and-Difference"><span class="nav-number">4.</span> <span class="nav-text">Minkowski Sum and Difference</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Minkowski-Sum"><span class="nav-number">4.1.</span> <span class="nav-text">Minkowski Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minkowski-Difference"><span class="nav-number">4.2.</span> <span class="nav-text">Minkowski Difference</span></a></li></ol></li></ol></div>
             
 
           </div>

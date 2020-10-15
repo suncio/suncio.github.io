@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Ray Tracing," />
+
+
+
+
+
+  <link rel="alternate" href="/rss2.xml" title="Suncio's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="OverviewFrom pbrt I quote:  Although there are many ways to write a ray tracer, all such systems simulate at least the following objects and phenomena:  Cameras: … Ray–object intersections: … Light s">
+<meta name="keywords" content="Ray Tracing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ray Tracing: Getting Started">
+<meta property="og:url" content="https://suncio.me/2020/09/13/Ray-Tracing-Getting-Started/index.html">
+<meta property="og:site_name" content="Suncio&#39;s Blog">
+<meta property="og:description" content="OverviewFrom pbrt I quote:  Although there are many ways to write a ray tracer, all such systems simulate at least the following objects and phenomena:  Cameras: … Ray–object intersections: … Light s">
+<meta property="og:locale" content="zh-hans">
+<meta property="og:image" content="https://suncio.me/images/FirstFinalScene.png">
+<meta property="og:image" content="https://suncio.me/images/RayTraceDiagram.svg">
+<meta property="og:updated_time" content="2020-10-15T08:28:11.041Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ray Tracing: Getting Started">
+<meta name="twitter:description" content="OverviewFrom pbrt I quote:  Although there are many ways to write a ray tracer, all such systems simulate at least the following objects and phenomena:  Cameras: … Ray–object intersections: … Light s">
+<meta name="twitter:image" content="https://suncio.me/images/FirstFinalScene.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://suncio.me/2020/09/13/Ray-Tracing-Getting-Started/"/>
+
+
+
+
+
+  <title>Ray Tracing: Getting Started | Suncio's Blog</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-109139975-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Suncio's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">I’m Nobody, Who Are You? Are you nobody, too?</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://suncio.me/2020/09/13/Ray-Tracing-Getting-Started/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="suncio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/ava.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Suncio's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Ray Tracing: Getting Started</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-13T21:05:36-07:00">
+                2020-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/images/FirstFinalScene.png" alt="First Final Scene"></p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>From <a href="http://www.pbr-book.org/3ed-2018/Introduction/Photorealistic_Rendering_and_the_Ray-Tracing_Algorithm.html" target="_blank" rel="external">pbrt</a> I quote:</p>
+<blockquote>
+<p>Although there are many ways to write a ray tracer, all such systems simulate at least the following objects and phenomena:</p>
+<ul>
+<li><em>Cameras:</em> …</li>
+<li><em>Ray–object intersections:</em> …</li>
+<li><em>Light sources:</em> …</li>
+<li><em>Visibility:</em> …</li>
+<li><em>Surface scattering:</em> …</li>
+<li><em>Indirect light transport:</em> …</li>
+<li><em>Ray propagation:</em> …</li>
+</ul>
+</blockquote>
+<p>As shown in the diagram below, from the camera we shoot a <strong>view ray</strong> towards every pixel in image space and track how they interact with objects/lights in the scene. And finally we have a color value for every single pixel. </p>
+<p><img src="/images/RayTraceDiagram.svg" alt="ray trace overview"></p>
+<p>Personally I learned rasterization before learning ray tracing, internally they have opposite philosophy: from the world to your eye or how your eye sees the world. And compare to all the approximation and interpolation method we use in <strong>rasterization</strong>, <strong>ray tracing</strong> is a more intuitive, realistic and yet resource consuming way for image rendering. </p>
+<h2 id="Ray"><a href="#Ray" class="headerlink" title="Ray"></a>Ray</h2><p>Since it’s called ray-tracing, obviously we need to represent a ray. A ray is denoted by formula</p>
+<script type="math/tex; mode=display">
+\mathbf{P}(t) = \mathbf{origin} + t * \mathbf{direction}</script><p>Accordingly we have a <code>Ray</code> class</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Ray</span></span></div><div class="line"><span class="class">&#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="comment">// ctor/dtor</span></div><div class="line">	Ray() = <span class="keyword">default</span>;</div><div class="line">	~Ray() = <span class="keyword">default</span>;</div><div class="line">	Ray(<span class="keyword">const</span> Vector3&amp; org, <span class="keyword">const</span> Vector3&amp; dir, <span class="keyword">double</span> time = <span class="number">0.0</span>)</div><div class="line">		: m_origin(org), m_direction(dir), m_time(time)</div><div class="line">	&#123;</div><div class="line">		m_direction.normalize();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// Getter</span></div><div class="line">	<span class="function">Vector3 <span class="title">getOrigin</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> m_origin; &#125;</div><div class="line">	<span class="function">Vector3 <span class="title">getDirection</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> m_direction; &#125;</div><div class="line">	<span class="function"><span class="keyword">double</span> <span class="title">getTime</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> m_time; &#125;</div><div class="line"></div><div class="line">	<span class="comment">// p(t) = origin + t * dir;</span></div><div class="line">	<span class="function">Vector3 <span class="title">pointAt</span><span class="params">(<span class="keyword">const</span> <span class="keyword">double</span>&amp; t)</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> m_origin + m_direction * t; &#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">	Vector3 m_origin;</div><div class="line">	Vector3 m_direction;</div><div class="line">	<span class="keyword">double</span> m_time;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="Camera"><a href="#Camera" class="headerlink" title="Camera"></a>Camera</h2><p>Contrary to rasterization, most of the operations we have is in world space, thus we need to transform screen space pixel coordinates into world space and shoot a view ray accordingly. </p>
+<p>$u, w, v$ represents axes of camera space, which is also right-hand. Then <code>vfov</code> and <code>aspect_ratio</code>  determines the view frustum. Then we have a <code>Camera</code> class:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Camera</span></span></div><div class="line"><span class="class">&#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Camera(</div><div class="line">		Point3  lookfrom,</div><div class="line">		Point3  lookat,</div><div class="line">		Vector3 vup,</div><div class="line">		<span class="keyword">double</span>  vfov,  <span class="comment">// vertical field-of-view in degrees</span></div><div class="line">		<span class="keyword">double</span>  aspect_ratio,</div><div class="line">		<span class="keyword">double</span>  aperture,</div><div class="line">		<span class="keyword">double</span>  focus_dist,</div><div class="line">		<span class="keyword">double</span> t0 = <span class="number">0</span>, </div><div class="line">		<span class="keyword">double</span> t1 = <span class="number">0</span></div><div class="line">	)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">auto</span> theta = degreeToRadian(vfov);</div><div class="line">		<span class="keyword">auto</span> h = <span class="built_in">tan</span>(theta / <span class="number">2.0</span>);</div><div class="line">		<span class="keyword">auto</span> viewport_height = <span class="number">2.0</span> * h;</div><div class="line">		<span class="keyword">auto</span> viewport_width = aspect_ratio * viewport_height;</div><div class="line"></div><div class="line">		w = (lookfrom - lookat).getNormalied();</div><div class="line">		u = vup.crossProduct(w).getNormalied();</div><div class="line">		v = w.crossProduct(u).getNormalied();</div><div class="line"></div><div class="line">		m_origin = lookfrom;</div><div class="line">		m_horizontal = focus_dist * viewport_width * u;</div><div class="line">		m_vertical = focus_dist * viewport_height * v;</div><div class="line">		m_lowerLeftCorner = m_origin - m_horizontal / <span class="number">2.0</span> - m_vertical / <span class="number">2.0</span> - focus_dist * w;</div><div class="line"></div><div class="line">		m_lens_radius = aperture / <span class="number">2</span>;</div><div class="line">		m_time0 = t0;</div><div class="line">		m_time1 = t1;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function">Ray <span class="title">getRay</span><span class="params">(<span class="keyword">double</span> s, <span class="keyword">double</span> t)</span> <span class="keyword">const</span></span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		Vector3 rd = m_lens_radius * Vector3::randomInUnitDisk();</div><div class="line">		Vector3 offset = u * rd.x + v * rd.y;</div><div class="line">		<span class="keyword">return</span> Ray(</div><div class="line">			m_origin + offset,</div><div class="line">			m_lowerLeftCorner + s * m_horizontal + t * m_vertical - m_origin - offset,</div><div class="line">			random_double(m_time0, m_time1)</div><div class="line">		);</div><div class="line">	&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">	Point3 m_origin;</div><div class="line">	Point3 m_lowerLeftCorner;</div><div class="line">	Vector3 m_horizontal;</div><div class="line">	Vector3 m_vertical;</div><div class="line">	Vector3 u, v, w;</div><div class="line">	<span class="keyword">double</span> m_lens_radius;</div><div class="line">	<span class="keyword">double</span> m_time0, m_time1; <span class="comment">// shutter open/close time</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="Ray-Object-Intersections"><a href="#Ray-Object-Intersections" class="headerlink" title="Ray-Object Intersections"></a>Ray-Object Intersections</h2><h3 id="Base-class"><a href="#Base-class" class="headerlink" title="Base class"></a>Base class</h3><p>We create a <code>HitRecord</code> struct to keep record of the hit information we need. And a virtual base class for other objects that can be hit.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Material</span>;</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">HitRecord</span></span></div><div class="line"><span class="class">&#123;</span></div><div class="line">	Point3 position;</div><div class="line">	Vector3 normal;</div><div class="line">	<span class="built_in">shared_ptr</span>&lt;Material&gt; mat_ptr;</div><div class="line">	<span class="keyword">double</span> t;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hittable</span></span></div><div class="line"><span class="class">&#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Hittable() = <span class="keyword">default</span>;</div><div class="line">	<span class="keyword">virtual</span> ~Hittable() = <span class="keyword">default</span>;</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">hit</span><span class="params">(<span class="keyword">const</span> Ray&amp; r, <span class="keyword">const</span> <span class="keyword">double</span>&amp; t_min, <span class="keyword">const</span> <span class="keyword">double</span>&amp; t_max, HitRecord&amp; rec)</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="Sphere"><a href="#Sphere" class="headerlink" title="Sphere"></a>Sphere</h3><p>For now we only have one primitive geometry - sphere, which make the  intersection math very simple, we know a sphere is denoted by formula:</p>
+<script type="math/tex; mode=display">
+(x-\mathbf{c}.x)^2 + (y-\mathbf{c}.y)^2 + (z-\mathbf{c}.z)^2 = R^2</script><p>And we put $\mathbf{P} = \mathbf{P}(t) = \mathbf{O} + t\mathbf{D}$ into the equation:</p>
+<script type="math/tex; mode=display">
+(\mathbf{D} \cdot \mathbf{D})t^2 + 2(\mathbf{D} \cdot (\mathbf{S} - \mathbf{c}))t + (\mathbf{S} - \mathbf{c}) \cdot (\mathbf{S} - \mathbf{c}) - R^2 = 0</script><p>For $at^2 + bt + c = 0$ we have</p>
+<script type="math/tex; mode=display">
+t = \frac{-b\pm \sqrt{b^2-4ac}}{2a}</script><p>where $b^2−4ac$ is the <strong>discriminant</strong> of the equation, and</p>
+<ul>
+<li>If $discriminant&lt;0$, the line of the ray does not intersect the sphere (missed);</li>
+<li>If $discriminant=0$, the line of the ray just touches the sphere in one point (tangent);</li>
+<li>If $discriminant&gt;0$, the line of the ray touches the sphere in two points (intersected).</li>
+</ul>
+<p>Then we have the <code>Sphere</code> class</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sphere</span> :</span> <span class="keyword">public</span> Hittable</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Sphere()&#123;&#125;</div><div class="line">	Sphere(Point3 center, <span class="keyword">double</span> r, <span class="built_in">shared_ptr</span>&lt;Material&gt; m) : m_center(center), m_radius(r), m_mat_ptr(m) &#123;&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">hit</span><span class="params">(<span class="keyword">const</span> Ray&amp; r, <span class="keyword">const</span> <span class="keyword">double</span>&amp; tmin, <span class="keyword">const</span> <span class="keyword">double</span>&amp; tmax, HitRecord&amp; rec)</span> <span class="keyword">const</span> override</span>;</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Point3 m_center;</div><div class="line">	<span class="keyword">double</span> m_radius;</div><div class="line">	<span class="built_in">shared_ptr</span>&lt;Material&gt; m_mat_ptr;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> Sphere::hit(<span class="keyword">const</span> Ray &amp;r, <span class="keyword">const</span> <span class="keyword">double</span> &amp;tmin, <span class="keyword">const</span> <span class="keyword">double</span> &amp;tmax, HitRecord &amp;rec) <span class="keyword">const</span></div><div class="line">&#123;</div><div class="line">	Vector3 oc = r.getOrigin() - m_center;</div><div class="line">	<span class="keyword">double</span> a = r.getDirection().getSquaredLength();</div><div class="line">	<span class="keyword">double</span> half_b = oc.dotProduct(r.getDirection());</div><div class="line">	<span class="keyword">double</span> c = oc.getSquaredLength() - m_radius * m_radius;</div><div class="line">	<span class="keyword">double</span> discriminant = half_b * half_b - a * c;</div><div class="line">	<span class="keyword">if</span> (discriminant &gt; <span class="number">0.0</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">double</span> tmp = (-half_b - <span class="built_in">sqrt</span>(discriminant)) / a;</div><div class="line">		<span class="keyword">if</span> (tmp &gt; tmin &amp;&amp; tmp &lt; tmax)</div><div class="line">		&#123;</div><div class="line">			rec.t = tmp;</div><div class="line">			rec.position = r.pointAt(rec.t);</div><div class="line">			Vector3 outward_normal = (rec.position - m_center) / m_radius;</div><div class="line">			rec.setFaceNormal(r, outward_normal);</div><div class="line">			Sphere::getSphereUV((rec.position - m_center) / m_radius, rec.u, rec.v);</div><div class="line">			rec.mat_ptr = m_mat_ptr;</div><div class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		tmp = (-half_b + <span class="built_in">sqrt</span>(discriminant)) / a;</div><div class="line">		<span class="keyword">if</span> (tmp &gt; tmin &amp;&amp; tmp &lt; tmax)</div><div class="line">		&#123;</div><div class="line">			rec.t = tmp;</div><div class="line">			rec.position = r.pointAt(rec.t);</div><div class="line">			Vector3 outward_normal = (rec.position - m_center) / m_radius;</div><div class="line">			rec.setFaceNormal(r, outward_normal);</div><div class="line">			Sphere::getSphereUV((rec.position - m_center) / m_radius, rec.u, rec.v);</div><div class="line">			rec.mat_ptr = m_mat_ptr;</div><div class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="List-of-hittable-objects"><a href="#List-of-hittable-objects" class="headerlink" title="List of hittable objects"></a>List of hittable objects</h3><p>For multiple objects in the scene we can have a list of these objects as it’s one giant object.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HittableList</span> :</span> <span class="keyword">public</span> Hittable</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	HittableList() = <span class="keyword">default</span>;</div><div class="line">	HittableList(<span class="built_in">shared_ptr</span>&lt;Hittable&gt; object) &#123; add(object); &#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123; m_list.clear(); &#125;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Hittable&gt; object)</span> </span>&#123; m_list.push_back(object); &#125;</div><div class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> m_list.empty(); &#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">hit</span><span class="params">(<span class="keyword">const</span> Ray&amp; r, <span class="keyword">const</span> <span class="keyword">double</span>&amp; tmin, <span class="keyword">const</span> <span class="keyword">double</span>&amp; tmax, HitRecord&amp; rec)</span> <span class="keyword">const</span> override</span>;</div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;Hittable&gt;&gt; m_list;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">bool</span> HittableList::hit(<span class="keyword">const</span> Ray &amp;r, <span class="keyword">const</span> <span class="keyword">double</span> &amp;tmin, <span class="keyword">const</span> <span class="keyword">double</span> &amp;tmax, HitRecord &amp;rec) <span class="keyword">const</span></div><div class="line">&#123;</div><div class="line">	HitRecord temp_rec;</div><div class="line">	<span class="keyword">bool</span> hit_anything = <span class="literal">false</span>;</div><div class="line">	<span class="keyword">double</span> closest_so_far = tmax;</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m_list.size(); i++)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (m_list[i]-&gt;hit(r, tmin, closest_so_far, temp_rec))</div><div class="line">		&#123;</div><div class="line">			hit_anything = <span class="literal">true</span>;</div><div class="line">			closest_so_far = temp_rec.t;</div><div class="line">			rec = temp_rec;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> hit_anything;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Material"><a href="#Material" class="headerlink" title="Material"></a>Material</h2><p>A material basically describes what an object will do to the ray when the ray hits the object - how it reflects, refracts and so on. We design a interface <code>scatter</code> to describe such behavior.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Material</span></span></div><div class="line"><span class="class">&#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">scatter</span><span class="params">(<span class="keyword">const</span> Ray&amp; r_in, <span class="keyword">const</span> HitRecord&amp; rec, Color&amp; attenuation, Ray&amp; scattered)</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="Lambertian"><a href="#Lambertian" class="headerlink" title="Lambertian"></a>Lambertian</h3><h3 id="Metal"><a href="#Metal" class="headerlink" title="Metal"></a>Metal</h3><h3 id="Dielectric"><a href="#Dielectric" class="headerlink" title="Dielectric"></a>Dielectric</h3><h2 id="Antialiasing"><a href="#Antialiasing" class="headerlink" title="Antialiasing"></a>Antialiasing</h2><p>Without antialiasing the image tend to have noisy and alias, we simply do a uniform-random sample in a square without considering the sample PDF(probability density function) :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> samples_per_pixel = <span class="number">100</span>;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> s = <span class="number">0</span>; s &lt; samples_per_pixel; ++s)</div><div class="line">&#123;</div><div class="line">	<span class="keyword">auto</span> u = (i + random_double()) / (image_width - <span class="number">1</span>);</div><div class="line">	<span class="keyword">auto</span> v = (j + random_double()) / (image_height - <span class="number">1</span>);</div><div class="line">	Ray r = cam.getRay(u, v);</div><div class="line">	pixel_color += ray_color(r, background, world, max_depth);</div><div class="line">&#125;</div><div class="line">write_color(buffer, i, j, image_width, pixel_color, samples_per_pixel);</div></pre></td></tr></table></figure>
+<h2 id="Depth-of-Field-Defocus-Blur"><a href="#Depth-of-Field-Defocus-Blur" class="headerlink" title="Depth of Field (Defocus Blur)"></a>Depth of Field (Defocus Blur)</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Ray-Tracing/" rel="tag"># Ray Tracing</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/09/Ruskell-Algorithms-2-FFT/" rel="next" title="Ruskell & Algorithms (2) -- FFT">
+                <i class="fa fa-chevron-left"></i> Ruskell & Algorithms (2) -- FFT
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/05/Physical-Simulation-Mass-Spring-Systems/" rel="prev" title="Physical Simulation: Mass-Spring Systems">
+                Physical Simulation: Mass-Spring Systems <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/ava.jpg"
+               alt="suncio" />
+          <p class="site-author-name" itemprop="name">suncio</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/rss2.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/suncio" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.codedragon.tech/" title="一只码龙，情绪稳定的硬件选手" target="_blank">一只码龙，情绪稳定的硬件选手</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ray"><span class="nav-number">2.</span> <span class="nav-text">Ray</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Camera"><span class="nav-number">3.</span> <span class="nav-text">Camera</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ray-Object-Intersections"><span class="nav-number">4.</span> <span class="nav-text">Ray-Object Intersections</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Base-class"><span class="nav-number">4.1.</span> <span class="nav-text">Base class</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sphere"><span class="nav-number">4.2.</span> <span class="nav-text">Sphere</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List-of-hittable-objects"><span class="nav-number">4.3.</span> <span class="nav-text">List of hittable objects</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Material"><span class="nav-number">5.</span> <span class="nav-text">Material</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambertian"><span class="nav-number">5.1.</span> <span class="nav-text">Lambertian</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metal"><span class="nav-number">5.2.</span> <span class="nav-text">Metal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dielectric"><span class="nav-number">5.3.</span> <span class="nav-text">Dielectric</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Antialiasing"><span class="nav-number">6.</span> <span class="nav-text">Antialiasing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Depth-of-Field-Defocus-Blur"><span class="nav-number">7.</span> <span class="nav-text">Depth of Field (Defocus Blur)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">suncio</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
