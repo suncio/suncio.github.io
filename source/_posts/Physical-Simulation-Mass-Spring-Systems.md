@@ -8,6 +8,8 @@ mathjax: true
 
 This a learning note from the [class](https://forum.taichi.graphics/t/topic/272) given by Yuanming Hu about **Physical Simulation**
 
+
+
 ## Introduction
 
 **Two Views of Continuums**
@@ -81,7 +83,6 @@ $$
 
 
 
-
 **Time integration - Implicit**
 
 Backward Euler (often with Newton's method, implicit)
@@ -128,6 +129,16 @@ $$
 - Sparse matrices
 - Conjugate gradients
 - Preconditioning
+
+
+
+## Code
+
+Based on Mass-Spring System, I wrote a simple rope simulator using OpenGL. I choose semi implicit time integration as it's the most intuitive method without revolving other math libs dependency. 
+
+Source repo is [here](https://github.com/suncio/OpenGL-Learning)
+
+![Rope Simulator](/images/RopeSimulator.gif)
 
 
 

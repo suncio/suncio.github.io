@@ -6,13 +6,13 @@ tags:
 mathjax: true
 ---
 
-##### Lagrange fluid simulation: Smoothed particle hydrodynamics
+## Lagrange fluid simulation: Smoothed particle hydrodynamics
 
 **High-level idea:** use particle carrying samples of physical quantities, and a kernel function $W$, to approximate continuous fields:
 $$
 A(\textbf{x}) = \sum_{i}{A_i\frac{m_i}{\rho_i}W\left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}
 $$
-![SPH particles and their kernel](https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/SPHInterpolationColorsVerbose.svg/440px-SPHInterpolationColorsVerbose.svg.png)
+![SPH particles and their kernel](/images/SPHInterpolationColorsVerbose.svg.png)
 
 
 
@@ -22,7 +22,7 @@ $$
 
 
 
-**Implementing SPH using the Equation of States (EOS)**
+## Implementing SPH using the Equation of States (EOS)
 
 Also know as Weakly Compressible SPH (WCSPH).
 
@@ -43,7 +43,8 @@ $$
 
 
 
-**Gradients in SPH**
+## Gradients in SPH
+
 $$
 A(\textbf{x}) = \sum_{i}{A_i\frac{m_i}{\rho_i}W\left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}
 \\
@@ -59,7 +60,7 @@ Now we can compute $\nabla p_i$
 
 
 
-**SPH Simulation Cycle**
+## SPH Simulation Cycle
 
 1. For each particle $i$, compute $\rho_i= \sum_j{ m_j W \left( ||\textbf{x} - \textbf{x}_j||_2, h \right)}$
 
@@ -80,7 +81,7 @@ Now we can compute $\nabla p_i$
 
 
 
-**Courant-Friedrichs-Lewy (CFL) condition**
+## Courant-Friedrichs-Lewy (CFL) condition
 
 One upper bound of time step size:
 $$
@@ -100,7 +101,7 @@ Application: estimating allowed time step in (explicit) time integrations. Typic
 
 
 
-**Accelerating SPH: Neighborhood search**
+## Accelerating SPH: Neighborhood search
 
 So far, per sub-step complexity of SPH is $O(n^2)$. This is too costly to be practical. In practice, people build spatial data structure such as voxel grid to accelerate neighborhood search. This reduces time complexity to $O(n)$.
 
@@ -110,7 +111,7 @@ Reference: [Compact Hashing](https://github.com/InteractiveComputerGraphics/Comp
 
 
 
-**Extend reading**
+## Extend reading
 
 SPH Fluids in Computer Graphics: https://cg.informatik.uni-freiburg.de/publications/2014_EG_SPH_STAR.pdf
 
