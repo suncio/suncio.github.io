@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Collision Detection," />
+  <meta name="keywords" content="Physical Simulation,Neural Network," />
 
 
 
@@ -98,23 +98,20 @@
 
 
 
-<meta name="description" content="A learning note while reading Real-Time Collision Detection by Christer Ericson This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro wil">
-<meta name="keywords" content="Collision Detection">
+<meta name="description" content="I come across this talk the other day and find the paper’s result astonishingly impressive. This DeepMind project can be found here.  Paper: arxiv.org/abs/2002.09405 Code &amp;amp; Datasets: https://githu">
+<meta name="keywords" content="Physical Simulation,Neural Network">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Real Time Collision Detection: Intro">
-<meta property="og:url" content="https://suncio.me/2020/10/16/Real-Time-Collision-Detection-Intro/index.html">
+<meta property="og:title" content="Learning to Simulate">
+<meta property="og:url" content="https://suncio.me/2020/10/18/Learning-to-Simulate/index.html">
 <meta property="og:site_name" content="Suncio&#39;s Blog">
-<meta property="og:description" content="A learning note while reading Real-Time Collision Detection by Christer Ericson This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro wil">
+<meta property="og:description" content="I come across this talk the other day and find the paper’s result astonishingly impressive. This DeepMind project can be found here.  Paper: arxiv.org/abs/2002.09405 Code &amp;amp; Datasets: https://githu">
 <meta property="og:locale" content="zh-hans">
-<meta property="og:image" content="https://suncio.me/images/ConvexConcave.png">
-<meta property="og:image" content="https://suncio.me/images/ConvexHull.png">
-<meta property="og:image" content="https://suncio.me/images/MinkowskiSum.png">
-<meta property="og:image" content="https://suncio.me/images/MinkowskiDiff.png">
-<meta property="og:updated_time" content="2020-10-15T07:20:28.923Z">
+<meta property="og:image" content="https://suncio.me/images/EncodeProcessDecode.png">
+<meta property="og:updated_time" content="2020-10-23T19:13:01.304Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Real Time Collision Detection: Intro">
-<meta name="twitter:description" content="A learning note while reading Real-Time Collision Detection by Christer Ericson This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro wil">
-<meta name="twitter:image" content="https://suncio.me/images/ConvexConcave.png">
+<meta name="twitter:title" content="Learning to Simulate">
+<meta name="twitter:description" content="I come across this talk the other day and find the paper’s result astonishingly impressive. This DeepMind project can be found here.  Paper: arxiv.org/abs/2002.09405 Code &amp;amp; Datasets: https://githu">
+<meta name="twitter:image" content="https://suncio.me/images/EncodeProcessDecode.png">
 
 
 
@@ -143,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="https://suncio.me/2020/10/16/Real-Time-Collision-Detection-Intro/"/>
+  <link rel="canonical" href="https://suncio.me/2020/10/18/Learning-to-Simulate/"/>
 
 
 
 
 
-  <title>Real Time Collision Detection: Intro | Suncio's Blog</title>
+  <title>Learning to Simulate | Suncio's Blog</title>
   
 
 
@@ -285,12 +282,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://suncio.me/2020/10/16/Real-Time-Collision-Detection-Intro/">
+    <link itemprop="mainEntityOfPage" href="https://suncio.me/2020/10/18/Learning-to-Simulate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="suncio">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/ava.jpg">
+      <meta itemprop="image" content="/uploads/ava.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -302,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Real Time Collision Detection: Intro</h1>
+          <h1 class="post-title" itemprop="name headline">Learning to Simulate</h1>
         
 
         <div class="post-meta">
@@ -314,8 +311,8 @@
               
                 <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-16T23:00:12-07:00">
-                2020-10-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-18T21:43:08-04:00">
+                2020-10-18
               </time>
             
 
@@ -352,47 +349,83 @@
       
 
       
-        <p>A learning note while reading <em>Real-Time Collision Detection</em> by Christer Ericson</p>
-<p>This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro will list some of the key concepts used in <strong>collision detection</strong> that I haven’t heard of or find important enough to re-memorize again.</p>
-<h2 id="Polygons"><a href="#Polygons" class="headerlink" title="Polygons"></a>Polygons</h2><p>​    A <em>polygon</em> is a closed figure with <em>n</em> sides, defined by an ordered set of three or more points in the plane in such a way that each point is connected to the next (and the last to the first) with a line segment. </p>
+        <p>I come across <a href="https://youtu.be/JSed7OBasXs" target="_blank" rel="external">this talk</a> the other day and find the paper’s result astonishingly impressive. This DeepMind project can be found <a href="https://sites.google.com/view/learning-to-simulate/home" target="_blank" rel="external">here</a>.</p>
 <ul>
-<li><p><strong>Simple</strong>: A polygon is <em>simple</em> if no two nonconsecutive edges have a point in common. A simple polygon partitions the plane into two disjoint parts: the <em>interior</em> (the bounded area covered by the polygon) and the <em>exterior</em> (the unbounded area outside the polygon).</p>
+<li>Paper: <a href="https://www.google.com/url?q=https%3A%2F%2Farxiv.org%2Fabs%2F2002.09405&amp;sa=D&amp;sntz=1&amp;usg=AFQjCNHfnS87cnJ7wrBF5ju3ZwMCWoje_w" target="_blank" rel="external">arxiv.org/abs/2002.09405</a></li>
+<li>Code &amp; Datasets: <a href="https://github.com/deepmind/deepmind-research/tree/master/learning_to_simulate" target="_blank" rel="external">https://github.com/deepmind/deepmind-research/tree/master/learning_to_simulate</a></li>
+</ul>
+<h2 id="High-Level-Overview-Simulation-as-Message-Passing-on-a-Graph"><a href="#High-Level-Overview-Simulation-as-Message-Passing-on-a-Graph" class="headerlink" title="High Level Overview - Simulation as Message-Passing on a Graph"></a>High Level Overview - Simulation as Message-Passing on a Graph</h2><h3 id="First-Step-Construct-the-graph"><a href="#First-Step-Construct-the-graph" class="headerlink" title="First Step - Construct the graph"></a>First Step - Construct the graph</h3><ul>
+<li><p>Particles within a particular small distance from each other are given edges so particles only interact with their immediate neighbors.</p>
 </li>
-<li><p><strong>Convex/Concave vertex</strong>: A vertex is a convex vertex if the interior angle is less than or equal to 180 degrees. If the angle is larger than 180 degrees, it is instead called a concave (or reflex) vertex.</p>
-<p><img src="/images/ConvexConcave.png" alt="Convex vertex and Concave vertex"></p>
-</li>
-<li><p><strong>Convex/Concave polygon</strong>: A polygon <em>P</em> is a convex polygon if all line segments between any two points of <em>P</em> lie fully inside <em>P</em>. A polygon that is not convex is called a concave polygon. A polygon with one or more concave vertices is necessarily concave, but a polygon with only convex vertices is not always convex.</p>
-</li>
-<li><p><strong>Convex hull</strong>: A convex point set $S$ is a set of points wherein the line segment between any two points in $S$ is also in $S$. Given a point set $S$, the convex hull of $S$, denoted $CH(S)$, is the smallest convex point set fully containing $S$. $CH(S)$ can also be described as the intersection of all convex point sets containing $S$. </p>
-<p><img src="/images/ConvexHull.png" alt="Convex Hull"></p>
-</li>
-<li><p><strong>Affine hull</strong>: Related to the convex hull is the affine hull, $AH(S)$. The affine hull is the lowest dimensional hyperplane that contains all points of $S$. That is, if $S$ contains just one point, $AH(S)$ is the point; if $S$ contains two points, $AH(S)$ is the line through them; if $S$ contains three noncollinear points, $AH(S)$ is the plane determined by them; and if $S$ contains four (or more) non co-planar points, $AH(S)$ is all of $\mathbb{R}^3$.</p>
+<li><p>Features are assigned to each of the nodes and each of the edges</p>
+<ul>
+<li>Nodes: Its mass, its other material properties, velocities of previous five time steps ……</li>
+<li>Edges: The distance between the two particles that are interacting, the spring constant, ……</li>
+</ul>
 </li>
 </ul>
-<h3 id="Test-Polygon-Convexity"><a href="#Test-Polygon-Convexity" class="headerlink" title="Test Polygon Convexity"></a>Test Polygon Convexity</h3><h2 id="Polyhedra"><a href="#Polyhedra" class="headerlink" title="Polyhedra"></a>Polyhedra</h2><h2 id="Voronoi-Diagram"><a href="#Voronoi-Diagram" class="headerlink" title="Voronoi Diagram"></a>Voronoi Diagram</h2><p>The Voronoi diagram is named after Georgy Voronoy, and is also called a <strong>Voronoi tessellation</strong>, a <strong>Voronoi decomposition</strong>, a <strong>Voronoi partition</strong>, or a <strong>Dirichlet tessellation</strong>. Voronoi cells are also known as <strong>Thiessen polygons</strong>.</p>
-<script type="math/tex; mode=display">
-R_{k}=\{x\in X\mid d(x,P_{k})\leq d(x,P_{j})\;{\text{for all}}\;j\neq k\}</script><h2 id="Minkowski-Sum-and-Difference"><a href="#Minkowski-Sum-and-Difference" class="headerlink" title="Minkowski Sum and Difference"></a>Minkowski Sum and Difference</h2><h3 id="Minkowski-Sum"><a href="#Minkowski-Sum" class="headerlink" title="Minkowski Sum"></a>Minkowski Sum</h3><p>​    Let $A$ and $B$ be two point sets, and let $\mathbf{a}$ and $\mathbf{b}$ be the position vectors corresponding to pairs of points in $A$ and $B$. The Minkowski sum, $A \oplus B$, is then defined as the set</p>
-<script type="math/tex; mode=display">
-A \oplus B=\{\mathbf {a} + \mathbf {b} \,|\,\mathbf {a} \in A,\ \mathbf {b} \in B\}</script><p>where $\mathbf {a} + \mathbf {b}$ is the vector sum of the position vectors $\mathbf{a}$ and $\mathbf{b}$. </p>
-<p><img src="/images/MinkowskiSum.png" alt="Minkowski Sum Example"></p>
-<h3 id="Minkowski-Difference"><a href="#Minkowski-Difference" class="headerlink" title="Minkowski Difference"></a>Minkowski Difference</h3><p>​    The Minkowski difference of two point sets $A$ and $B$ is defined analogously to the Minkowski sum:</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\begin{aligned}
-A \ominus B &= \{\mathbf {a} - \mathbf {b} \,|\,\mathbf {a} \in A,\ \mathbf {b} \in B\}\\
-&= A \oplus (-B) 
-\end{aligned}
-\end{equation}</script><p>​    The Minkowski difference is important from a collision detection perspective because two point sets $A$ and $B$ collide (that is, have one or more points in common) <strong>if and only if</strong> their Minkowski difference $C (C = A \ominus B)$ contains the origin:</p>
-<p><img src="/images/MinkowskiDiff.png" alt="Minkowski Diff Example"></p>
-<p>​    In fact, it is possible to establish an even stronger result: computing the minimum distance between A and B is equivalent to computing the minimum distance between C and the origin. This fact is utilized in the GJK algorithm:</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\begin{aligned}
-distance(A, B) 
-&= min\left\{ \| \mathbf{a} - \mathbf{b} \| \,:\,\mathbf {a} \in A,\, \mathbf {b} \in B\ \right\}\\
-&= min\left\{ \| \mathbf{c} \| \,:\,\mathbf {c} \in A \ominus B \right\}
-\end{aligned}
-\end{equation}</script>
+<h3 id="Second-Step-Message-passing"><a href="#Second-Step-Message-passing" class="headerlink" title="Second Step - Message passing"></a>Second Step - Message passing</h3><ul>
+<li>Nodes in the graph send massages to the neighbors they’re connected to</li>
+<li><p>And then each node receives these signals from their neighbors</p>
+</li>
+<li><p>Update its representation of itself</p>
+</li>
+</ul>
+<h3 id="Third-Step-Decoder"><a href="#Third-Step-Decoder" class="headerlink" title="Third Step - Decoder"></a>Third Step - Decoder</h3><ul>
+<li>Takes these new updated states and turns them into acceleration vectors</li>
+<li>Final output of the network: to predict the acceleration of the particles in the current time step</li>
+</ul>
+<h3 id="Last-Step"><a href="#Last-Step" class="headerlink" title="Last Step"></a>Last Step</h3><ul>
+<li>Use these acceleration vectors and update the state</li>
+</ul>
+<h2 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h2><p><strong>Encoder - Processor - Decoder</strong></p>
+<p><img src="/images/EncodeProcessDecode.png" alt="Encode, Process, Decode"></p>
+<h3 id="ENCODER"><a href="#ENCODER" class="headerlink" title="ENCODER"></a>ENCODER</h3><ul>
+<li><p>Responsible for constructing the graph</p>
+</li>
+<li><p>Initializing the node and edge features</p>
+</li>
+<li><p><em>One detail:</em> they don’t just use the raw features, they first pass them through dedicated neural networks, that projects them into some new space that facilitates learning in the downstream tasks</p>
+</li>
+<li><p>At the end you have the initial embeddings </p>
+</li>
+<li><p>No interactions between particles has happened at this point</p>
+</li>
+<li><p>ENCODER definition:</p>
+<p>The ENCODER: $\mathcal{X} \rightarrow \mathcal{G}$ embeds the particle based state representation, $X$, as a latent graph, $G^0 = ENCODER(X)$, where $G = (V, E, \mathbf{u}),\,\mathbf{v}<em>i \in V$ and $\mathbf{e}</em>{i, j} \in E$. </p>
+<ul>
+<li>The node embeddings, $\mathbf{v}_i = \varepsilon^v (\mathbf{x}_i)$, are learned functions of the particles’ states</li>
+<li>The edge embeddings, $\mathbf{e}<em>{i,j} = \varepsilon^e (\mathbf{r}</em>{i,j} )$, are learned functions of the pairwise properties of the corresponding particles</li>
+<li>The graph-level embedding, $\mathbf{u}$, can represent global properties such as gravity and magnetic fields</li>
+</ul>
+</li>
+</ul>
+<h3 id="PROCESSOR"><a href="#PROCESSOR" class="headerlink" title="PROCESSOR"></a>PROCESSOR</h3><ul>
+<li><p>The number of graph network layers you have determines how far each message can propagate: e.g. three layers means you can go three hops away from a node</p>
+</li>
+<li><p>At the end of the process you have updated embeddings for each of the nodes that now takes into account its $m$-hop neighborhood where $m$ is the number of graph network layers used in the processor</p>
+</li>
+<li><p>PROCESSOR definition:</p>
+<p>The PROCESSOR: $\mathcal{G} \rightarrow \mathcal{G}$ computes interactions among nodes via $M$ steps of learned message-passing, to generate a sequence of updated latent graphs, $\mathbf{G} = (G^1, …, G^M)$, where $G^{m+1} = GN^{m+1}(G^m)$. The final graph $G^M = PROCESSOR(G^0)$.</p>
+</li>
+</ul>
+<h3 id="DECODER"><a href="#DECODER" class="headerlink" title="DECODER"></a>DECODER</h3><ul>
+<li><p>Translate these updated embeddings into acceleration vectors</p>
+</li>
+<li><p>DECODER definition:</p>
+<p>The DECODER: $\mathcal{G} \rightarrow \mathcal{Y}$ extracts dynamics information from the nodes of the final latent graph, $\mathbf{y}_i = \delta^v(\mathbf{v}_i^M)$</p>
+</li>
+</ul>
+<h2 id="Why-Graph-Networks"><a href="#Why-Graph-Networks" class="headerlink" title="Why Graph Networks"></a>Why Graph Networks</h2><h3 id="How-about-regular-neural-networks"><a href="#How-about-regular-neural-networks" class="headerlink" title="How about regular neural networks"></a>How about regular neural networks</h3><ul>
+<li>First challenge: particles are going to interact with different neighborhood sizes</li>
+<li>Second challenge: neural networks/RNNs are <strong>not</strong> permutation-invariant, but real physical world <strong>is</strong> </li>
+</ul>
+<h3 id="Graph-do-a-few-useful-things"><a href="#Graph-do-a-few-useful-things" class="headerlink" title="Graph do a few useful things"></a>Graph do a few useful things</h3><ul>
+<li>First: they encode what interact with what</li>
+<li>Second: they combine neighborhood information in a way that’s <strong>permutation-invariant</strong></li>
+<li>Third: they are very data efficient because they have lots of examples that all share the same network parameters so all the particles are using the same model parameters</li>
+</ul>
+<h2 id="Use-of-Random-Noise"><a href="#Use-of-Random-Noise" class="headerlink" title="Use of Random Noise"></a>Use of Random Noise</h2>
       
     </div>
     
@@ -409,7 +442,9 @@ distance(A, B)
       
         <div class="post-tags">
           
-            <a href="/tags/Collision-Detection/" rel="tag"># Collision Detection</a>
+            <a href="/tags/Physical-Simulation/" rel="tag"># Physical Simulation</a>
+          
+            <a href="/tags/Neural-Network/" rel="tag"># Neural Network</a>
           
         </div>
       
@@ -422,8 +457,8 @@ distance(A, B)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/10/06/Physical-Simulation-Smoothed-Particle-Hydrodynamics/" rel="next" title="Physical Simulation: Smoothed Particle Hydrodynamics">
-                <i class="fa fa-chevron-left"></i> Physical Simulation: Smoothed Particle Hydrodynamics
+              <a href="/2020/10/17/Real-Time-Collision-Detection-Intro/" rel="next" title="Real Time Collision Detection: Intro">
+                <i class="fa fa-chevron-left"></i> Real Time Collision Detection: Intro
               </a>
             
           </div>
@@ -431,6 +466,10 @@ distance(A, B)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/22/Physical-Simulation-Elasticity/" rel="prev" title="Physical Simulation: Elasticity">
+                Physical Simulation: Elasticity <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -495,7 +534,7 @@ distance(A, B)
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/uploads/ava.jpg"
+               src="/uploads/ava.png"
                alt="suncio" />
           <p class="site-author-name" itemprop="name">suncio</p>
            
@@ -507,7 +546,7 @@ distance(A, B)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -520,7 +559,7 @@ distance(A, B)
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">Tags</span>
               </a>
             </div>
@@ -589,7 +628,7 @@ distance(A, B)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Polygons"><span class="nav-number">1.</span> <span class="nav-text">Polygons</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Test-Polygon-Convexity"><span class="nav-number">1.1.</span> <span class="nav-text">Test Polygon Convexity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Polyhedra"><span class="nav-number">2.</span> <span class="nav-text">Polyhedra</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Voronoi-Diagram"><span class="nav-number">3.</span> <span class="nav-text">Voronoi Diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Minkowski-Sum-and-Difference"><span class="nav-number">4.</span> <span class="nav-text">Minkowski Sum and Difference</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Minkowski-Sum"><span class="nav-number">4.1.</span> <span class="nav-text">Minkowski Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minkowski-Difference"><span class="nav-number">4.2.</span> <span class="nav-text">Minkowski Difference</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#High-Level-Overview-Simulation-as-Message-Passing-on-a-Graph"><span class="nav-number">1.</span> <span class="nav-text">High Level Overview - Simulation as Message-Passing on a Graph</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#First-Step-Construct-the-graph"><span class="nav-number">1.1.</span> <span class="nav-text">First Step - Construct the graph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Second-Step-Message-passing"><span class="nav-number">1.2.</span> <span class="nav-text">Second Step - Message passing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Third-Step-Decoder"><span class="nav-number">1.3.</span> <span class="nav-text">Third Step - Decoder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Last-Step"><span class="nav-number">1.4.</span> <span class="nav-text">Last Step</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Modules"><span class="nav-number">2.</span> <span class="nav-text">Modules</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ENCODER"><span class="nav-number">2.1.</span> <span class="nav-text">ENCODER</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PROCESSOR"><span class="nav-number">2.2.</span> <span class="nav-text">PROCESSOR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DECODER"><span class="nav-number">2.3.</span> <span class="nav-text">DECODER</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-Graph-Networks"><span class="nav-number">3.</span> <span class="nav-text">Why Graph Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#How-about-regular-neural-networks"><span class="nav-number">3.1.</span> <span class="nav-text">How about regular neural networks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Graph-do-a-few-useful-things"><span class="nav-number">3.2.</span> <span class="nav-text">Graph do a few useful things</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-of-Random-Noise"><span class="nav-number">4.</span> <span class="nav-text">Use of Random Noise</span></a></li></ol></div>
             
 
           </div>
@@ -612,7 +651,7 @@ distance(A, B)
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

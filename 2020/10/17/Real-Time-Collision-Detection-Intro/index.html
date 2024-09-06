@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Collision Detection," />
+
+
+
+
+
+  <link rel="alternate" href="/rss2.xml" title="Suncio's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="A learning note while reading Real-Time Collision Detection by Christer Ericson This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro wil">
+<meta name="keywords" content="Collision Detection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Real Time Collision Detection: Intro">
+<meta property="og:url" content="https://suncio.me/2020/10/17/Real-Time-Collision-Detection-Intro/index.html">
+<meta property="og:site_name" content="Suncio&#39;s Blog">
+<meta property="og:description" content="A learning note while reading Real-Time Collision Detection by Christer Ericson This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro wil">
+<meta property="og:locale" content="zh-hans">
+<meta property="og:image" content="https://suncio.me/images/ConvexConcave.png">
+<meta property="og:image" content="https://suncio.me/images/ConvexHull.png">
+<meta property="og:image" content="https://suncio.me/images/Quads.png">
+<meta property="og:image" content="https://suncio.me/images/MinkowskiSum.png">
+<meta property="og:image" content="https://suncio.me/images/MinkowskiDiff.png">
+<meta property="og:updated_time" content="2020-10-17T03:33:19.175Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Real Time Collision Detection: Intro">
+<meta name="twitter:description" content="A learning note while reading Real-Time Collision Detection by Christer Ericson This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro wil">
+<meta name="twitter:image" content="https://suncio.me/images/ConvexConcave.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"right","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://suncio.me/2020/10/17/Real-Time-Collision-Detection-Intro/"/>
+
+
+
+
+
+  <title>Real Time Collision Detection: Intro | Suncio's Blog</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-109139975-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Suncio's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">I’m Nobody, Who Are You? Are you nobody, too?</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Kategorien
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://suncio.me/2020/10/17/Real-Time-Collision-Detection-Intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="suncio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/ava.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Suncio's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Real Time Collision Detection: Intro</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-17T02:00:12-04:00">
+                2020-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>A learning note while reading <em>Real-Time Collision Detection</em> by Christer Ericson</p>
+<p>This is a personal blog so I’ll skip some of the common knowledge like general 3D math or linear algebra. This intro will list some of the key concepts used in <strong>collision detection</strong> that I haven’t heard of or find important enough to re-memorize again.</p>
+<h2 id="Polygons"><a href="#Polygons" class="headerlink" title="Polygons"></a>Polygons</h2><p>​    A <em>polygon</em> is a closed figure with <em>n</em> sides, defined by an ordered set of three or more points in the plane in such a way that each point is connected to the next (and the last to the first) with a line segment. </p>
+<ul>
+<li><p><strong>Simple</strong>: A polygon is <em>simple</em> if no two nonconsecutive edges have a point in common. A simple polygon partitions the plane into two disjoint parts: the <em>interior</em> (the bounded area covered by the polygon) and the <em>exterior</em> (the unbounded area outside the polygon).</p>
+</li>
+<li><p><strong>Convex/Concave vertex</strong>: A vertex is a convex vertex if the interior angle is less than or equal to 180 degrees. If the angle is larger than 180 degrees, it is instead called a concave (or reflex) vertex.</p>
+<p><img src="/images/ConvexConcave.png" alt="Convex vertex and Concave vertex"></p>
+</li>
+<li><p><strong>Convex/Concave polygon</strong>: A polygon <em>P</em> is a convex polygon if all line segments between any two points of <em>P</em> lie fully inside <em>P</em>. A polygon that is not convex is called a concave polygon. A polygon with one or more concave vertices is necessarily concave, but a polygon with only convex vertices is not always convex.</p>
+</li>
+<li><p><strong>Convex hull</strong>: A convex point set $S$ is a set of points wherein the line segment between any two points in $S$ is also in $S$. Given a point set $S$, the convex hull of $S$, denoted $CH(S)$, is the smallest convex point set fully containing $S$. $CH(S)$ can also be described as the intersection of all convex point sets containing $S$. </p>
+<p><img src="/images/ConvexHull.png" alt="Convex Hull"></p>
+</li>
+<li><p><strong>Affine hull</strong>: Related to the convex hull is the affine hull, $AH(S)$. The affine hull is the lowest dimensional hyperplane that contains all points of $S$. That is, if $S$ contains just one point, $AH(S)$ is the point; if $S$ contains two points, $AH(S)$ is the line through them; if $S$ contains three noncollinear points, $AH(S)$ is the plane determined by them; and if $S$ contains four (or more) non co-planar points, $AH(S)$ is all of $\mathbb{R}^3$.</p>
+</li>
+</ul>
+<h3 id="Test-Polygon-Convexity"><a href="#Test-Polygon-Convexity" class="headerlink" title="Test Polygon Convexity"></a>Test Polygon Convexity</h3><h4 id="Triangle"><a href="#Triangle" class="headerlink" title="Triangle"></a>Triangle</h4><p>The triangle is the only n-sided polygon always guaranteed to be convex.</p>
+<h4 id="Quad"><a href="#Quad" class="headerlink" title="Quad"></a>Quad</h4><p>Frequently, quadrilaterals (or quads, for short) are the only primitives supported in addition to triangles. </p>
+<p><img src="/images/Quads.png" alt="Different Type of Quads"></p>
+<p> The quad is therefore convex if</p>
+<script type="math/tex; mode=display">
+(BC \times BA ) \cdot (BD \times BC) < 0\, \text{and}
+(AC \times AD ) \cdot (AC \times AB) < 0</script><p>A straightforward implementation results in the following code:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Test if quadrilateral (a, b, c, d) is convex</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">IsConvexQuad</span><span class="params">(Point a, Point b, Point c, Point d)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="comment">// Quad is nonconvex if Dot(Cross(bd, ba), Cross(bd, bc)) &gt;= 0</span></div><div class="line">	Vector bda = Cross(d - b, a - b);</div><div class="line">	Vector bdc = Cross(d - b, c - b);</div><div class="line">	<span class="keyword">if</span> (Dot(bda, bdc) &gt;= <span class="number">0.0f</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	<span class="comment">// Quad is now convex iff Dot(Cross(ac, ad), Cross(ac, ab)) &lt; 0</span></div><div class="line">	Vector acd = Cross(c - a, d - a);</div><div class="line">	Vector acb = Cross(c - a, b - a);</div><div class="line">	<span class="keyword">return</span> Dot(acd, acb) &lt; <span class="number">0.0f</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="General-n-gons"><a href="#General-n-gons" class="headerlink" title="General n-gons"></a>General n-gons</h4><p>For general $n$-gons, not just quads, a straightforward solution is to, for each polygon edge, test to see if all other vertices lie (strictly) on the same side of that edge. If the test is true for all edges, the polygon is convex, and otherwise it is concave. A separate check for coincident vertices is required to make the test robust. However, although easy to implement, this test is expensive for large polygons, with an $O(n^2)$ complexity in the number of vertices.</p>
+<h2 id="Polyhedra"><a href="#Polyhedra" class="headerlink" title="Polyhedra"></a>Polyhedra</h2><h2 id="Computing-Convex-Hulls"><a href="#Computing-Convex-Hulls" class="headerlink" title="Computing Convex Hulls"></a>Computing Convex Hulls</h2><p>Among other uses, convex hulls can serve as tight bounding volumes for collision geometry. </p>
+<h3 id="Andrew’s-Algorithm"><a href="#Andrew’s-Algorithm" class="headerlink" title="Andrew’s Algorithm"></a>Andrew’s Algorithm</h3><p>One of the most robust and easy to implement <strong>2D</strong> convex hull algorithms is <em>Andrew’s algorithm</em>. </p>
+<h3 id="The-Quickhull-Algorithm"><a href="#The-Quickhull-Algorithm" class="headerlink" title="The Quickhull Algorithm"></a>The Quickhull Algorithm</h3><p>Although Andrew’s algorithm works very well in 2D, it is not immediately clear how to extend it to work in 3D. An alternative method that works in both 2D and 3D is the <em>Quickhull algorithm</em>.</p>
+<h2 id="Voronoi-Diagram"><a href="#Voronoi-Diagram" class="headerlink" title="Voronoi Diagram"></a>Voronoi Diagram</h2><p>The Voronoi diagram is named after Georgy Voronoy, and is also called a <strong>Voronoi tessellation</strong>, a <strong>Voronoi decomposition</strong>, a <strong>Voronoi partition</strong>, or a <strong>Dirichlet tessellation</strong>. Voronoi cells are also known as <strong>Thiessen polygons</strong>.</p>
+<script type="math/tex; mode=display">
+R_{k}=\{x\in X\mid d(x,P_{k})\leq d(x,P_{j})\;{\text{for all}}\;j\neq k\}</script><h2 id="Minkowski-Sum-and-Difference"><a href="#Minkowski-Sum-and-Difference" class="headerlink" title="Minkowski Sum and Difference"></a>Minkowski Sum and Difference</h2><h3 id="Minkowski-Sum"><a href="#Minkowski-Sum" class="headerlink" title="Minkowski Sum"></a>Minkowski Sum</h3><p>​    Let $A$ and $B$ be two point sets, and let $\mathbf{a}$ and $\mathbf{b}$ be the position vectors corresponding to pairs of points in $A$ and $B$. The Minkowski sum, $A \oplus B$, is then defined as the set</p>
+<script type="math/tex; mode=display">
+A \oplus B=\{\mathbf {a} + \mathbf {b} \,|\,\mathbf {a} \in A,\ \mathbf {b} \in B\}</script><p>where $\mathbf {a} + \mathbf {b}$ is the vector sum of the position vectors $\mathbf{a}$ and $\mathbf{b}$. </p>
+<p><img src="/images/MinkowskiSum.png" alt="Minkowski Sum Example"></p>
+<h3 id="Minkowski-Difference"><a href="#Minkowski-Difference" class="headerlink" title="Minkowski Difference"></a>Minkowski Difference</h3><p>​    The Minkowski difference of two point sets $A$ and $B$ is defined analogously to the Minkowski sum:</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+A \ominus B &= \{\mathbf {a} - \mathbf {b} \,|\,\mathbf {a} \in A,\ \mathbf {b} \in B\}\\
+&= A \oplus (-B) 
+\end{aligned}
+\end{equation}</script><p>​    The Minkowski difference is important from a collision detection perspective because two point sets $A$ and $B$ collide (that is, have one or more points in common) <strong>if and only if</strong> their Minkowski difference $C (C = A \ominus B)$ contains the origin:</p>
+<p><img src="/images/MinkowskiDiff.png" alt="Minkowski Diff Example"></p>
+<p>​    In fact, it is possible to establish an even stronger result: computing the minimum distance between A and B is equivalent to computing the minimum distance between C and the origin. This fact is utilized in the GJK algorithm:</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+distance(A, B) 
+&= min\left\{ \| \mathbf{a} - \mathbf{b} \| \,:\,\mathbf {a} \in A,\, \mathbf {b} \in B\ \right\}\\
+&= min\left\{ \| \mathbf{c} \| \,:\,\mathbf {c} \in A \ominus B \right\}
+\end{aligned}
+\end{equation}</script>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Collision-Detection/" rel="tag"># Collision Detection</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/06/Physical-Simulation-Smoothed-Particle-Hydrodynamics/" rel="next" title="Physical Simulation: Smoothed Particle Hydrodynamics">
+                <i class="fa fa-chevron-left"></i> Physical Simulation: Smoothed Particle Hydrodynamics
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/18/Learning-to-Simulate/" rel="prev" title="Learning to Simulate">
+                Learning to Simulate <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/ava.png"
+               alt="suncio" />
+          <p class="site-author-name" itemprop="name">suncio</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/rss2.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/suncio" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.codedragon.tech/" title="一只码龙，情绪稳定的硬件选手" target="_blank">一只码龙，情绪稳定的硬件选手</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Polygons"><span class="nav-number">1.</span> <span class="nav-text">Polygons</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Test-Polygon-Convexity"><span class="nav-number">1.1.</span> <span class="nav-text">Test Polygon Convexity</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Triangle"><span class="nav-number">1.1.1.</span> <span class="nav-text">Triangle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Quad"><span class="nav-number">1.1.2.</span> <span class="nav-text">Quad</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#General-n-gons"><span class="nav-number">1.1.3.</span> <span class="nav-text">General n-gons</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Polyhedra"><span class="nav-number">2.</span> <span class="nav-text">Polyhedra</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Computing-Convex-Hulls"><span class="nav-number">3.</span> <span class="nav-text">Computing Convex Hulls</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Andrew’s-Algorithm"><span class="nav-number">3.1.</span> <span class="nav-text">Andrew’s Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Quickhull-Algorithm"><span class="nav-number">3.2.</span> <span class="nav-text">The Quickhull Algorithm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Voronoi-Diagram"><span class="nav-number">4.</span> <span class="nav-text">Voronoi Diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Minkowski-Sum-and-Difference"><span class="nav-number">5.</span> <span class="nav-text">Minkowski Sum and Difference</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Minkowski-Sum"><span class="nav-number">5.1.</span> <span class="nav-text">Minkowski Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minkowski-Difference"><span class="nav-number">5.2.</span> <span class="nav-text">Minkowski Difference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">suncio</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
