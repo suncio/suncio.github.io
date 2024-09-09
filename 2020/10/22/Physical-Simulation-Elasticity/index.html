@@ -106,10 +106,14 @@
 <meta property="og:site_name" content="Suncio&#39;s Blog">
 <meta property="og:description" content="DeformationDeformation map $\phi : a$ (vector to vector) function that relates rest material position and deformed material position.  \mathbf{x}_\mathbf{deformed} = \phi(\mathbf{x}_\mathbf{rest})Note">
 <meta property="og:locale" content="zh-hans">
-<meta property="og:updated_time" content="2020-10-20T08:35:10.467Z">
+<meta property="og:image" content="https://suncio.me/images/LinearFEM_1.png">
+<meta property="og:image" content="https://suncio.me/images/LinearFEM_2.png">
+<meta property="og:image" content="https://suncio.me/images/LinearFEM_PseudoCode.png">
+<meta property="og:updated_time" content="2024-09-09T03:01:11.563Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Physical Simulation: Elasticity">
 <meta name="twitter:description" content="DeformationDeformation map $\phi : a$ (vector to vector) function that relates rest material position and deformed material position.  \mathbf{x}_\mathbf{deformed} = \phi(\mathbf{x}_\mathbf{rest})Note">
+<meta name="twitter:image" content="https://suncio.me/images/LinearFEM_1.png">
 
 
 
@@ -213,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Accueil
           </a>
         </li>
       
@@ -307,9 +311,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-22T19:17:49-04:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-22T16:17:49-04:00">
                 2020-10-22
               </time>
             
@@ -402,7 +406,30 @@ K = \frac{E}{3(1-2v)}
 \\
 \ 
 \\
-\mu = \frac{E}{2(1+v)}</script>
+\mu = \frac{E}{2(1+v)}</script><h3 id="Hyperelastic-material-models"><a href="#Hyperelastic-material-models" class="headerlink" title="Hyperelastic material models"></a>Hyperelastic material models</h3><p>Popular ones in graphics</p>
+<ul>
+<li>Linear elasticity (small deformation only)</li>
+<li>Neo-Hookean</li>
+<li>(Fixed) Corotated</li>
+</ul>
+<p>See details at <a href="https://www.math.ucla.edu/~cffjiang/research/mpmcourse/mpmcourse.pdf" target="_blank" rel="external">The Material Point Method for Simulating Continuum Materials</a></p>
+<h2 id="FEM-Finite-Element-Method-basics"><a href="#FEM-Finite-Element-Method-basics" class="headerlink" title="FEM(Finite Element Method) basics"></a>FEM(Finite Element Method) basics</h2><h3 id="The-finite-element-method"><a href="#The-finite-element-method" class="headerlink" title="The finite element method"></a>The finite element method</h3><p>Galerkin discretization scheme that builds discrete equations using weak formulations of continuous PDEs.</p>
+<p>Wikipeida - <a href="https://en.wikipedia.org/wiki/Finite_element_method" target="_blank" rel="external">https://en.wikipedia.org/wiki/Finite_element_method</a> </p>
+<p>Periodic Table of the Finite Elements - <a href="https://www-users.cse.umn.edu/~arnold/femtable/index.html" target="_blank" rel="external">https://www-users.cse.umn.edu/~arnold/femtable/index.html</a> </p>
+<h3 id="Linear-tetrahedral-triangular-FEM"><a href="#Linear-tetrahedral-triangular-FEM" class="headerlink" title="Linear tetrahedral (triangular) FEM"></a>Linear tetrahedral (triangular) FEM</h3><p>Linear tetrahedral finite elements (for elasticity) assume <strong>the deformation map $\phi$ is affine and thereby deformation gradient F is constant</strong> within a single tetrahedral element:</p>
+<script type="math/tex; mode=display">
+\mathbf{x}_\mathbf{deformed} = \textbf{F}\mathbf{x}_\mathbf{rest} +  \textbf{b}</script><p>For every element $e$, its elastic potential energy </p>
+<script type="math/tex; mode=display">
+U(e) = \int_{e} \Psi(\textbf{F(x)})\,\textbf{dx} = V_{e}\Psi(\textbf{F}_{e})</script><h3 id="Computing-textbf-F-e-in-linear-tetrahedral-finite-elements"><a href="#Computing-textbf-F-e-in-linear-tetrahedral-finite-elements" class="headerlink" title="Computing $\textbf{F}_{e}$ in linear tetrahedral finite elements"></a>Computing $\textbf{F}_{e}$ in linear tetrahedral finite elements</h3><p>First let’s elimiate $\textbf{b}$</p>
+<p><img src="/images/LinearFEM_1.png" alt="Linear FEM eliminate b"></p>
+<p>So now we have the equations</p>
+<p><img src="/images/LinearFEM_2.png" alt="Linear FEM equations"></p>
+<p>Name $\textbf{B} = \textbf{D}_{m}^{-1}$, we have</p>
+<script type="math/tex; mode=display">
+\textbf{F} = \textbf{D} \textbf{B}</script><p>Note that $\textbf{B}$ is a <strong>constant</strong> throughout the physical process. Therefore it should be pre-computed.</p>
+<h3 id="Pseudo-code"><a href="#Pseudo-code" class="headerlink" title="Pseudo code"></a>Pseudo code</h3><p><img src="/images/LinearFEM_PseudoCode.png" alt="Linear FEM pseudo code"></p>
+<h2 id="Extend-reading"><a href="#Extend-reading" class="headerlink" title="Extend reading"></a>Extend reading</h2><p><a href="https://viterbi-web.usc.edu/~jbarbic/femdefo/" target="_blank" rel="external">FEM Simulation of 3D Deformable Solids: A practitioner’s guide to theory, discretization and model reduction</a></p>
+
       
     </div>
     
@@ -441,6 +468,10 @@ K = \frac{E}{3(1-2v)}
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/11/08/Physical-Simulation-Eulerian-Fluid-Simulation/" rel="prev" title="Physical Simulation: Eulerian Fluid Simulation">
+                Physical Simulation: Eulerian Fluid Simulation <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -494,10 +525,10 @@ K = \frac{E}{3(1-2v)}
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Ensemble
           </li>
         </ul>
       
@@ -517,8 +548,8 @@ K = \frac{E}{3(1-2v)}
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">8</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -599,7 +630,7 @@ K = \frac{E}{3(1-2v)}
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Deformation"><span class="nav-number">1.</span> <span class="nav-text">Deformation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hyperelasticity"><span class="nav-number">2.</span> <span class="nav-text">Hyperelasticity</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stress-tensor"><span class="nav-number">2.1.</span> <span class="nav-text">Stress tensor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Elastic-moduli-isotropic-materials"><span class="nav-number">2.2.</span> <span class="nav-text">Elastic moduli (isotropic materials)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Deformation"><span class="nav-number">1.</span> <span class="nav-text">Deformation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hyperelasticity"><span class="nav-number">2.</span> <span class="nav-text">Hyperelasticity</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stress-tensor"><span class="nav-number">2.1.</span> <span class="nav-text">Stress tensor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Elastic-moduli-isotropic-materials"><span class="nav-number">2.2.</span> <span class="nav-text">Elastic moduli (isotropic materials)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hyperelastic-material-models"><span class="nav-number">2.3.</span> <span class="nav-text">Hyperelastic material models</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FEM-Finite-Element-Method-basics"><span class="nav-number">3.</span> <span class="nav-text">FEM(Finite Element Method) basics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-finite-element-method"><span class="nav-number">3.1.</span> <span class="nav-text">The finite element method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linear-tetrahedral-triangular-FEM"><span class="nav-number">3.2.</span> <span class="nav-text">Linear tetrahedral (triangular) FEM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Computing-textbf-F-e-in-linear-tetrahedral-finite-elements"><span class="nav-number">3.3.</span> <span class="nav-text">Computing $\textbf{F}_{e}$ in linear tetrahedral finite elements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pseudo-code"><span class="nav-number">3.4.</span> <span class="nav-text">Pseudo code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extend-reading"><span class="nav-number">4.</span> <span class="nav-text">Extend reading</span></a></li></ol></div>
             
 
           </div>
@@ -635,7 +666,7 @@ K = \frac{E}{3(1-2v)}
 </div>
 
 <div class="theme-info">
-  Theme -
+  Thème -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Muse
   </a>
