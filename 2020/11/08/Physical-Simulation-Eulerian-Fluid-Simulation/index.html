@@ -98,22 +98,22 @@
 
 
 
-<meta name="description" content="OverviewMaterial Derivatives: Lagrangian v.s. Eulerian \frac{\text{D}}{\text{D}t} \coloneqq \frac{\partial}{\partial t} + \textbf{u} \cdot \nablaE.g.,  \frac{\text{D} T}{\text{D}t} \coloneqq \frac{\pa">
+<meta name="description" content="OverviewMaterial Derivatives: Lagrangian v.s. EulerianWe define material derivative as  \frac{\text{D}}{\text{D}t} \coloneqq \frac{\partial}{\partial t} + \textbf{u} \cdot \nablaE.g.,  \frac{\text{D}">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Physical Simulation: Eulerian Fluid Simulation">
 <meta property="og:url" content="https://suncio.me/2020/11/08/Physical-Simulation-Eulerian-Fluid-Simulation/index.html">
 <meta property="og:site_name" content="Suncio&#39;s Blog">
-<meta property="og:description" content="OverviewMaterial Derivatives: Lagrangian v.s. Eulerian \frac{\text{D}}{\text{D}t} \coloneqq \frac{\partial}{\partial t} + \textbf{u} \cdot \nablaE.g.,  \frac{\text{D} T}{\text{D}t} \coloneqq \frac{\pa">
+<meta property="og:description" content="OverviewMaterial Derivatives: Lagrangian v.s. EulerianWe define material derivative as  \frac{\text{D}}{\text{D}t} \coloneqq \frac{\partial}{\partial t} + \textbf{u} \cdot \nablaE.g.,  \frac{\text{D}">
 <meta property="og:locale" content="zh-hans">
 <meta property="og:image" content="https://suncio.me/images/CellcenteredGrids.png">
 <meta property="og:image" content="https://suncio.me/images/StaggeredGrids.png">
 <meta property="og:image" content="https://suncio.me/images/SemiLagrangianAdvection.png">
 <meta property="og:image" content="https://suncio.me/images/SemiLagrangianAdvectionProblem.png">
 <meta property="og:image" content="https://suncio.me/images/Projection_1.png">
-<meta property="og:updated_time" content="2024-09-15T19:42:46.351Z">
+<meta property="og:updated_time" content="2024-09-15T19:45:07.609Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Physical Simulation: Eulerian Fluid Simulation">
-<meta name="twitter:description" content="OverviewMaterial Derivatives: Lagrangian v.s. Eulerian \frac{\text{D}}{\text{D}t} \coloneqq \frac{\partial}{\partial t} + \textbf{u} \cdot \nablaE.g.,  \frac{\text{D} T}{\text{D}t} \coloneqq \frac{\pa">
+<meta name="twitter:description" content="OverviewMaterial Derivatives: Lagrangian v.s. EulerianWe define material derivative as  \frac{\text{D}}{\text{D}t} \coloneqq \frac{\partial}{\partial t} + \textbf{u} \cdot \nablaE.g.,  \frac{\text{D}">
 <meta name="twitter:image" content="https://suncio.me/images/CellcenteredGrids.png">
 
 
@@ -218,7 +218,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -228,7 +228,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
-            Categories
+            Kategorien
           </a>
         </li>
       
@@ -238,7 +238,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -312,7 +312,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-08T00:13:10-05:00">
                 2020-11-08
@@ -352,7 +352,8 @@
       
 
       
-        <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><h3 id="Material-Derivatives-Lagrangian-v-s-Eulerian"><a href="#Material-Derivatives-Lagrangian-v-s-Eulerian" class="headerlink" title="Material Derivatives: Lagrangian v.s. Eulerian"></a>Material Derivatives: Lagrangian v.s. Eulerian</h3><script type="math/tex; mode=display">
+        <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><h3 id="Material-Derivatives-Lagrangian-v-s-Eulerian"><a href="#Material-Derivatives-Lagrangian-v-s-Eulerian" class="headerlink" title="Material Derivatives: Lagrangian v.s. Eulerian"></a>Material Derivatives: Lagrangian v.s. Eulerian</h3><p>We define material derivative as</p>
+<script type="math/tex; mode=display">
 \frac{\text{D}}{\text{D}t} \coloneqq \frac{\partial}{\partial t} + \textbf{u} \cdot \nabla</script><p>E.g.,</p>
 <script type="math/tex; mode=display">
 \frac{\text{D} T}{\text{D}t} \coloneqq \frac{\partial T}{\partial t} + \textbf{u} \cdot \nabla T
@@ -563,10 +564,10 @@ q^{n+1} = q^{n} + \frac{2}{9} \Delta t k_{1} + \frac{3}{9} \Delta t k_{2} + \fra
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -587,7 +588,7 @@ q^{n+1} = q^{n} + \frac{2}{9} \Delta t k_{1} + \frac{3}{9} \Delta t k_{2} + \fra
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -600,7 +601,7 @@ q^{n+1} = q^{n} + \frac{2}{9} \Delta t k_{1} + \frac{3}{9} \Delta t k_{2} + \fra
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
                 <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -700,7 +701,7 @@ q^{n+1} = q^{n} + \frac{2}{9} \Delta t k_{1} + \frac{3}{9} \Delta t k_{2} + \fra
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
