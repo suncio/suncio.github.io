@@ -105,16 +105,16 @@
 <meta property="og:site_name" content="Suncio&#39;s Blog">
 <meta property="og:description" content="OverviewMaterial Derivatives: Lagrangian v.s. Eulerian \frac{\text{D}}{\text{D}t} \coloneqq \frac{\partial}{\partial t} + \textbf{u} \cdot \nablaE.g.,  \frac{\text{D} T}{\text{D}t} \coloneqq \frac{\pa">
 <meta property="og:locale" content="zh-hans">
-<meta property="og:image" content="https://suncio.me/2020/11/08/images/CellcenteredGrids.png">
-<meta property="og:image" content="https://suncio.me/2020/11/08/images/StaggeredGrids.png">
-<meta property="og:image" content="https://suncio.me/2020/11/08/images/SemiLagrangianAdvection.png">
-<meta property="og:image" content="https://suncio.me/2020/11/08/images/SemiLagrangianAdvectionProblem.png">
-<meta property="og:image" content="https://suncio.me/2020/11/08/images/Projection_1.png">
-<meta property="og:updated_time" content="2024-09-10T20:11:12.884Z">
+<meta property="og:image" content="https://suncio.me/images/CellcenteredGrids.png">
+<meta property="og:image" content="https://suncio.me/images/StaggeredGrids.png">
+<meta property="og:image" content="https://suncio.me/images/SemiLagrangianAdvection.png">
+<meta property="og:image" content="https://suncio.me/images/SemiLagrangianAdvectionProblem.png">
+<meta property="og:image" content="https://suncio.me/images/Projection_1.png">
+<meta property="og:updated_time" content="2024-09-15T19:42:46.351Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Physical Simulation: Eulerian Fluid Simulation">
 <meta name="twitter:description" content="OverviewMaterial Derivatives: Lagrangian v.s. Eulerian \frac{\text{D}}{\text{D}t} \coloneqq \frac{\partial}{\partial t} + \textbf{u} \cdot \nablaE.g.,  \frac{\text{D} T}{\text{D}t} \coloneqq \frac{\pa">
-<meta name="twitter:image" content="https://suncio.me/2020/11/08/images/CellcenteredGrids.png">
+<meta name="twitter:image" content="https://suncio.me/images/CellcenteredGrids.png">
 
 
 
@@ -218,7 +218,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Accueil
+            Home
           </a>
         </li>
       
@@ -312,7 +312,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posté le</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-08T00:13:10-05:00">
                 2020-11-08
@@ -400,9 +400,9 @@
 \frac{\partial \textbf{u}}{\partial t} = - \frac{1}{\rho} \nabla p \quad \text{s.t.} \quad \nabla \cdot \textbf{u}^{t+1} = 0</script></li>
 </ol>
 <h2 id="Grid"><a href="#Grid" class="headerlink" title="Grid"></a>Grid</h2><p>Spatial discretization using <em>cell-centered</em> grids or <em>staggered</em> grids</p>
-<p><img src="../images/CellcenteredGrids.png" alt="cell-centered grids"></p>
+<p><img src="/images/CellcenteredGrids.png" alt="cell-centered grids"></p>
 <p>v.s.</p>
-<p><img src="../images/StaggeredGrids.png" alt="staggered grids"></p>
+<p><img src="/images/StaggeredGrids.png" alt="staggered grids"></p>
 <p>And for any point within a grid, just use bilinear interpolation. As it’s an obvious and straightforward method, we move on</p>
 <h2 id="Advection"><a href="#Advection" class="headerlink" title="Advection"></a>Advection</h2><h3 id="Advection-schemes"><a href="#Advection-schemes" class="headerlink" title="Advection schemes"></a>Advection schemes</h3><p>A trade-off between numerical viscosity, stability, performance and complexity:</p>
 <ul>
@@ -415,12 +415,12 @@
 <h3 id="Semi-Lagrangian-advection"><a href="#Semi-Lagrangian-advection" class="headerlink" title="Semi-Lagrangian advection"></a>Semi-Lagrangian advection</h3><ol>
 <li>To find a fluid value at grid point $\vec{x}<em>{G}$ at the new time step, we need to know where the fluid at $\vec{x}</em>{G}$ was one time step ago, position $\vec{x}_{P}$, following the velocity field.</li>
 </ol>
-<p><img src="../images/SemiLagrangianAdvection.png" alt="Semi-Lagrangian Advection"></p>
+<p><img src="/images/SemiLagrangianAdvection.png" alt="Semi-Lagrangian Advection"></p>
 <ol>
 <li>Now we use bilinear interpolation, our basic semi-Lagrangian formula, assuming the particle-tracing algorithm has tracked back to location $\vec{x}_{P}$ is<script type="math/tex; mode=display">
 q_{G}^{n+1} = \textbf{interpolate}(q_{G}^{n}, \vec{x}_{P})</script></li>
 </ol>
-<p><strong>Problem:</strong> The real trajectory of material parcels can be complex<br><img src="../images/SemiLagrangianAdvectionProblem.png" alt="Semi-Lagrangian Advection Problem"></p>
+<p><strong>Problem:</strong> The real trajectory of material parcels can be complex<br><img src="/images/SemiLagrangianAdvectionProblem.png" alt="Semi-Lagrangian Advection Problem"></p>
 <h3 id="Solve-the-problem-Backtrace-Method"><a href="#Solve-the-problem-Backtrace-Method" class="headerlink" title="Solve the problem - Backtrace Method"></a>Solve the problem - Backtrace Method</h3><p>Initial value problem (ODE): simply use explicit time integration schemes</p>
 <ul>
 <li>Forward Euler (“RK1”)<script type="math/tex; mode=display">
@@ -450,7 +450,7 @@ q^{n+1} = q^{n} + \frac{2}{9} \Delta t k_{1} + \frac{3}{9} \Delta t k_{2} + \fra
 <li>Apply the error $\textbf{x}^{final} = \textbf{x}^{**} + \textbf{x}^{error}$</li>
 </ul>
 <p>Be careful: need to prevent overshooting.</p>
-<h2 id="Projection"><a href="#Projection" class="headerlink" title="Projection"></a>Projection</h2><p>The project routine will subtract the pressure gradient from the intermediate velocity field $\vec{u}$<br><img src="../images/Projection_1.png" alt="Projection equations"></p>
+<h2 id="Projection"><a href="#Projection" class="headerlink" title="Projection"></a>Projection</h2><p>The project routine will subtract the pressure gradient from the intermediate velocity field $\vec{u}$<br><img src="/images/Projection_1.png" alt="Projection equations"></p>
 <p>Actually after we combine the two euqations together we could easily get:</p>
 <script type="math/tex; mode=display">
 \nabla \cdot \nabla p = \frac{\rho}{\Delta t} \nabla \cdot \vec{u}</script><p>… which is Poisson’s equation</p>
@@ -563,10 +563,10 @@ q^{n+1} = q^{n} + \frac{2}{9} \Delta t k_{1} + \frac{3}{9} \Delta t k_{2} + \fra
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table Des Matières
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Ensemble
+            Overview
           </li>
         </ul>
       
@@ -587,7 +587,7 @@ q^{n+1} = q^{n} + \frac{2}{9} \Delta t k_{1} + \frac{3}{9} \Delta t k_{2} + \fra
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
                 <span class="site-state-item-count">9</span>
-                <span class="site-state-item-name">articles</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -704,7 +704,7 @@ q^{n+1} = q^{n} + \frac{2}{9} \Delta t k_{1} + \frac{3}{9} \Delta t k_{2} + \fra
 </div>
 
 <div class="theme-info">
-  Thème -
+  Theme -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Muse
   </a>
